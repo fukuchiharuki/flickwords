@@ -1,5 +1,5 @@
 <template>
-  <div class="keyboard" @touchstart="noop" @touchmove="noop" @touchend="noop">
+  <div class="keyboard">
     <div class="keyboard-layout keyboard-layout--left">
       <KeyboardSideKey label="☰" />
       <KeyboardSideKey label="❔" />
@@ -35,8 +35,6 @@
     { label: 'わ', options: ['わ', 'を', 'ん'] },
     { label: '', options: [] }
   ]
-
-  function noop() {}
 
   function onInput(value: string | null) {
     console.log(value)
