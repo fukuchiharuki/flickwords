@@ -13,15 +13,16 @@
   .console {
     width: 100%;
     height: 100vh;
-    display: flex;
-    flex-direction: column;
 
     .display-frame {
-      flex: 1;
-      overflow: scroll;
+      min-height: 100vh;
     }
 
-    //.keyboard-frame {
-    //}
+    .keyboard-frame {
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      touch-action: none;
+    }
   }
 </style>
