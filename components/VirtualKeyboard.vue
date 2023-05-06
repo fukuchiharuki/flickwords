@@ -37,7 +37,7 @@
   ]
 
   function onInput(value: string | null) {
-    alert(value)
+    // alert(value)
     console.log(value)
   }
 </script>
