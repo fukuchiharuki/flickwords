@@ -1,11 +1,5 @@
 <template>
   <div>
-    <button @click="test('click test')">test build</button>
+    <VirtualConsole />
   </div>
 </template>
-
-<script setup lang="ts">
-  function test(v: string) {
-    alert(v)
-  }
-</script>
