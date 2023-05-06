@@ -19,7 +19,5 @@
     "prettier": "^2.8.8",
     "sass": "^1.62.1"
   },
-  "dependencies": {
-    "vue3-touch-events": "^4.1.2"
-  }
+  "dependencies": {}
 }

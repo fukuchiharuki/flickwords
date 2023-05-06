@@ -1,9 +1,9 @@
 <template>
   <div class="keyboard-key">
     <button
-      v-touch:press="onTouchStart"
-      v-touch:drag="onTouchMove"
-      v-touch:release="onTouchEnd"
+      @touchstart="onTouchStart"
+      @touchmove="onTouchMove"
+      @touchend="onTouchEnd"
     >
       {{ label }}
     </button>
