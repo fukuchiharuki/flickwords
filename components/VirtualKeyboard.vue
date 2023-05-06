@@ -60,8 +60,7 @@
 
     .keyboard-key {
       // layout
-      float: left;
-      position: relative;
+      display: inline-block;
       margin: 4px;
       width: calc(33.3% - 8px);
       height: 48px;
