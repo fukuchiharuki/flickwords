@@ -1,6 +1,6 @@
 <template>
   <div class="keyboard-key keyboard-key--side">
-    <div class="button" @click="test('click side')">{{ label }}</div>
+    <div class="button">{{ label }}</div>
   </div>
 </template>
 
@@ -8,10 +8,6 @@
   defineProps<{
     label: string
   }>()
-
-  function test(v: string) {
-    alert(v)
-  }
 </script>
 
 <style lang="scss" scoped>

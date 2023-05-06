@@ -1,7 +1,6 @@
 <template>
   <div class="keyboard-key">
     <div
-      @click="test('click')"
       v-touch:press="onTouchStart"
       v-touch:drag="onTouchMove"
       v-touch:release="onTouchEnd"
@@ -80,10 +79,6 @@
   function onTouchEnd() {
     operating.value = false
     emit('input', input.value)
-  }
-
-  function test(v: string) {
-    alert(v)
   }
 </script>
 
