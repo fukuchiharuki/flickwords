@@ -49,6 +49,7 @@
   const operating = ref(false)
 
   function onTouchStart(e: TouchEvent) {
+    e.preventDefault()
     startX.value = e.changedTouches[0].pageX
     startY.value = e.changedTouches[0].pageY
     cursor.value = 0
