@@ -1,3 +1,5 @@
 <template>
-  <div>Index page</div>
+  <div>
+    <VirtualConsole />
+  </div>
 </template>
