@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   ssr: false,
   app: {
-    cdnURL: '/flic-input-ja/'
+    baseURL: '/flic-input-ja/'
   },
   css: ['@/assets/styles/main.scss'],
   vite: {
