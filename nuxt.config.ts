@@ -4,6 +4,9 @@ export default defineNuxtConfig({
   app: {
     baseURL: '/flic-input-ja/'
   },
+  experimental: {
+    payloadExtraction: false
+  },
   css: ['@/assets/styles/main.scss'],
   vite: {
     css: {
