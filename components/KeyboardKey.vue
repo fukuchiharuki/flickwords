@@ -5,7 +5,7 @@
       @touchmove="onTouchMove($event)"
       @touchend="onTouchEnd()"
     >
-      {{ label }}
+      {{ label || '&nbsp;' }}
     </button>
     <div :class="{ operating: operating }" class="keyboard-key-candidates">
       <div
