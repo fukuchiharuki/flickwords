@@ -1,6 +1,6 @@
 <template>
   <div class="keyboard-key keyboard-key--side">
-    <div class="button">{{ label }}</div>
+    <button>{{ label }}</button>
   </div>
 </template>
 
@@ -12,7 +12,7 @@
 
 <style lang="scss" scoped>
   .keyboard-key--side {
-    .button {
+    button {
       background-color: gray;
       color: white;
     }

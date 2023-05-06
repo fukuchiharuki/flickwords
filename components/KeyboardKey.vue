@@ -1,13 +1,12 @@
 <template>
   <div class="keyboard-key">
-    <div
+    <button
       v-touch:press="onTouchStart"
       v-touch:drag="onTouchMove"
       v-touch:release="onTouchEnd"
-      class="button"
     >
-      {{ label || '&nbsp;' }}
-    </div>
+      {{ label }}
+    </button>
     <div :class="{ operating: operating }" class="keyboard-key-candidates">
       <div
         v-for="(candidate, index) in candidates"
@@ -86,8 +85,7 @@
   .keyboard-key {
     position: relative;
 
-    .button {
-      position: relative;
+    button {
       background-color: white;
     }
 
