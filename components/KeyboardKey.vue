@@ -87,6 +87,7 @@
     position: relative;
 
     .button {
+      position: relative;
       background-color: white;
     }
 
