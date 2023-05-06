@@ -36,9 +36,9 @@
     { label: '', options: [] }
   ]
 
-  function onInput(value: string | null) {
+  function onInput(/* value: string | null */) {
     // alert(value)
-    console.log(value)
+    // console.log(value)
   }
 </script>
 
@@ -61,10 +61,10 @@
 
     .keyboard-key {
       // layout
-      display: inline-block;
+      float: left;
       margin: 4px;
 
-      .button {
+      button {
         // leyout
         width: 100%;
         height: 100%;
@@ -83,14 +83,14 @@
     .keyboard-key {
       width: calc(33.3% - 8px);
       height: 48px;
-      .button {
+      button {
         line-height: 48px;
       }
 
       &--side {
         width: calc(100% - 8px);
         height: 104px;
-        .button {
+        button {
           line-height: 104px;
         }
       }

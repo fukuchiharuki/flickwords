@@ -1,14 +1,12 @@
 <template>
   <div class="keyboard-key">
-    <div
-      @click="test('click')"
-      v-touch:press="onTouchStart"
-      v-touch:drag="onTouchMove"
-      v-touch:release="onTouchEnd"
-      class="button"
+    <button
+      @touchstart="onTouchStart"
+      @touchmove="onTouchMove"
+      @touchend="onTouchEnd"
     >
-      {{ label || '&nbsp;' }}
-    </div>
+      {{ label }}
+    </button>
     <div :class="{ operating: operating }" class="keyboard-key-candidates">
       <div
         v-for="(candidate, index) in candidates"
@@ -81,18 +79,13 @@
     operating.value = false
     emit('input', input.value)
   }
-
-  function test(v: string) {
-    alert(v)
-  }
 </script>
 
 <style lang="scss" scoped>
   .keyboard-key {
     position: relative;
 
-    .button {
-      position: relative;
+    button {
       background-color: white;
     }
 
