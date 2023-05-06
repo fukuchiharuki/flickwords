@@ -20,9 +20,9 @@
 
     .keyboard-frame {
       width: 100%;
-      //position: fixed;
+      position: fixed;
       bottom: 0;
-      //touch-action: none;
+      touch-action: none;
     }
   }
 </style>

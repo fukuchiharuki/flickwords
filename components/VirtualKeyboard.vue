@@ -63,14 +63,8 @@
       // layout
       display: inline-block;
       margin: 4px;
-      width: calc(33.3% - 8px);
-      height: 48px;
-      &--side {
-        width: calc(100% - 8px);
-        height: 104px;
-      }
 
-      button {
+      .button {
         // leyout
         width: 100%;
         height: 100%;
@@ -78,10 +72,27 @@
         border-radius: 4px;
         border: 0;
         box-sizing: border-box;
+        text-align: center;
         // font
         font-weight: bold;
         font-size: large;
         font-family: 'Segoe UI Symbol', 'Apple Symbols', 'Noto Sans Symbols 2';
+      }
+    }
+
+    .keyboard-key {
+      width: calc(33.3% - 8px);
+      height: 48px;
+      .button {
+        line-height: 48px;
+      }
+
+      &--side {
+        width: calc(100% - 8px);
+        height: 104px;
+        .button {
+          line-height: 104px;
+        }
       }
     }
   }
