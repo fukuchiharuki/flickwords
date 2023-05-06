@@ -87,6 +87,7 @@
 
     button {
       background-color: white;
+      color: #333333;
     }
 
     .keyboard-key-candidates {
