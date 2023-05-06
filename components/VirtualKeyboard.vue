@@ -36,9 +36,9 @@
     { label: '', options: [] }
   ]
 
-  function onInput(value: string | null) {
+  function onInput(/* value: string | null */) {
     // alert(value)
-    console.log(value)
+    // console.log(value)
   }
 </script>
 
