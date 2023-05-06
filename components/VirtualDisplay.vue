@@ -1,5 +1,5 @@
 <template>
-  <div class="display">Display</div>
+  <div class="display">Prevent default</div>
 </template>
 
 <style lang="scss" scoped>

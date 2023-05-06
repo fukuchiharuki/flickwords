@@ -1,9 +1,9 @@
 <template>
   <div class="keyboard-key">
     <button
-      @touchstart="onTouchStart"
-      @touchmove="onTouchMove"
-      @touchend="onTouchEnd"
+      @touchstart.prevent="onTouchStart"
+      @touchmove.prevent="onTouchMove"
+      @touchend.prevent="onTouchEnd"
     >
       {{ label }}
     </button>
