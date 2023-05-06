@@ -1,9 +1,9 @@
 <template>
   <div class="keyboard-key">
     <button
-      @touchstart="onTouchStart($event)"
-      @touchmove="onTouchMove($event)"
-      @touchend="onTouchEnd()"
+      v-touch:press="onTouchStart"
+      v-touch:drag="onTouchMove"
+      v-touch:release="onTouchEnd"
     >
       {{ label || '&nbsp;' }}
     </button>
@@ -49,7 +49,6 @@
   const operating = ref(false)
 
   function onTouchStart(e: TouchEvent) {
-    e.preventDefault()
     startX.value = e.changedTouches[0].pageX
     startY.value = e.changedTouches[0].pageY
     cursor.value = 0
