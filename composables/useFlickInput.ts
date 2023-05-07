@@ -1,6 +1,6 @@
 export default function useFlickInput(
   options: (string | null)[],
-  onInput: (input: string | null) => void
+  onInput: (value: string | null) => void
 ): {
   input: ComputedRef<string | null>
   operating: Ref<boolean>

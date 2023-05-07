@@ -18,14 +18,14 @@
   }>()
 
   const emit = defineEmits<{
-    (e: 'input', value: string | null): void
+    (e: 'input', value: string): void
   }>()
 
   const { input, operating, onTouchStart, onTouchMove, onTouchEnd } =
     useFlickInput(props.options, onInput)
 
-  function onInput(input: string | null) {
-    input && emit('input', input)
+  function onInput(value: string | null) {
+    value && emit('input', value)
   }
 </script>
 
