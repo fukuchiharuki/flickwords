@@ -1,8 +1,8 @@
 <template>
   <div class="keyboard">
     <div class="keyboard-layout keyboard-layout--left">
-      <KeyboardSideKey label="☰" />
-      <KeyboardSideKey label="❔" />
+      <KeyboardSideKey label="☰" @click="onClick('menu')" />
+      <KeyboardSideKey label="❔" @click="onClick('manual')" />
     </div>
     <div class="keyboard-layout keyboard-layout--main">
       <KeyboardKey
@@ -14,8 +14,8 @@
       />
     </div>
     <div class="keyboard-layout keyboard-layout--right">
-      <KeyboardSideKey label="⌫" />
-      <KeyboardSideKey label="⏎" />
+      <KeyboardSideKey label="⌫" @click="onClick('backspace')" />
+      <KeyboardSideKey label="⏎" @click="onClick('enter')" />
     </div>
   </div>
 </template>
@@ -36,9 +36,12 @@
     { label: '、', options: ['、', '。', '？', '！', null] }
   ]
 
-  function onInput(/* value: string | null */) {
-    // alert(value)
-    // console.log(value)
+  function onInput(value: string) {
+    console.log(value)
+  }
+
+  function onClick(value: string) {
+    console.log(value)
   }
 </script>
 

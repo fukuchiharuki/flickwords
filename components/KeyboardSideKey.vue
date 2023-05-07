@@ -1,12 +1,16 @@
 <template>
   <div class="keyboard-key keyboard-key--side">
-    <button>{{ label }}</button>
+    <button @click="$emit('click')">{{ label }}</button>
   </div>
 </template>
 
 <script setup lang="ts">
   defineProps<{
     label: string
+  }>()
+
+  defineEmits<{
+    (e: 'click'): void
   }>()
 </script>
 
