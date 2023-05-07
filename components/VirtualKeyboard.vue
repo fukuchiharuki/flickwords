@@ -31,9 +31,9 @@
     { label: 'ま', options: ['ま', 'み', 'む', 'め', 'も'] },
     { label: 'や', options: ['や', null, 'ゆ', null, 'よ'] },
     { label: 'ら', options: ['ら', 'り', 'る', 'れ', 'ろ'] },
-    { label: '', options: [] },
-    { label: 'わ', options: ['わ', 'を', 'ん'] },
-    { label: '', options: [] }
+    { label: '小', options: ['小', '゛', null, '゜', null] },
+    { label: 'わ', options: ['わ', 'を', 'ん', null, null] },
+    { label: '、', options: ['、', '。', '？', '！', null] }
   ]
 
   function onInput(/* value: string | null */) {
