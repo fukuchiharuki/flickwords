@@ -14,6 +14,14 @@ export default function useFlickInput(
   const input = computed(() => options[cursor.value])
   const operating = ref(false)
 
+  return {
+    input,
+    operating,
+    onTouchStart,
+    onTouchMove,
+    onTouchEnd
+  }
+
   function onTouchStart(e: TouchEvent) {
     startX.value = e.changedTouches[0].pageX
     startY.value = e.changedTouches[0].pageY
@@ -44,13 +52,5 @@ export default function useFlickInput(
   function onTouchEnd() {
     operating.value = false
     onInput(input.value)
-  }
-
-  return {
-    input,
-    operating,
-    onTouchStart,
-    onTouchMove,
-    onTouchEnd
   }
 }
