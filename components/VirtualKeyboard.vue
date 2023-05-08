@@ -21,6 +21,10 @@
 </template>
 
 <script setup lang="ts">
+  const emit = defineEmits<{
+    (e: 'input', args: { type: string; value: string }): void
+  }>()
+
   const keyboardKeys = [
     { label: 'あ', options: ['あ', 'い', 'う', 'え', 'お'] },
     { label: 'か', options: ['か', 'き', 'く', 'け', 'こ'] },
@@ -37,11 +41,17 @@
   ]
 
   function onInput(value: string) {
-    console.log(value)
+    emit('input', {
+      type: 'kana',
+      value
+    })
   }
 
   function onClick(value: string) {
-    console.log(value)
+    emit('input', {
+      type: 'func',
+      value
+    })
   }
 </script>
 
@@ -54,9 +64,11 @@
 
   .keyboard-layout {
     box-sizing: border-box;
+
     &--main {
       width: 64%;
     }
+
     &--left,
     &--right {
       flex: 1;
@@ -86,6 +98,7 @@
     .keyboard-key {
       width: calc(33.3% - 8px);
       height: 48px;
+
       button {
         line-height: 48px;
       }
@@ -93,6 +106,7 @@
       &--side {
         width: calc(100% - 8px);
         height: 104px;
+
         button {
           line-height: 104px;
         }
