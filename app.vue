@@ -2,7 +2,7 @@
   <div>
     <VirtualConsole>
       <template #display>
-        <VirtualDisplay />
+        <VirtualDisplay :text="text" />
       </template>
       <template #keyboard>
         <VirtualKeyboard @input="onInput" />
@@ -12,8 +12,12 @@
 </template>
 
 <script setup lang="ts">
+  const { text, input, backspace, newline } = useTextEdit()
+
   function onInput(args: { type: string; value: string }) {
     const { type, value } = args
-    console.log(type, value)
+    if (type === 'kana') input(value)
+    if (type === 'func' && value === 'backspace') backspace()
+    if (type === 'func' && value === 'enter') newline()
   }
 </script>

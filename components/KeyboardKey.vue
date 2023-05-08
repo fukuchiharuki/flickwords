@@ -1,6 +1,7 @@
 <template>
   <div class="keyboard-key">
     <button
+      :class="{ small: label.length > 1 }"
       @touchstart.prevent="onTouchStart"
       @touchmove.prevent="onTouchMove"
       @touchend.prevent="onTouchEnd"
@@ -36,6 +37,10 @@
     button {
       background-color: white;
       color: #333333;
+
+      &.small {
+        font-size: small;
+      }
     }
   }
 </style>
