@@ -1,6 +1,6 @@
 <template>
   <div class="display">
-    <div class="title">jWORDLE</div>
+    <div class="title">jWORDLE - rev.1</div>
     <div class="container">
       <GameBoard />
     </div>
