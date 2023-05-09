@@ -12,10 +12,11 @@
 <style lang="scss" scoped>
   .console {
     width: 100vw;
+    height: 100%;
 
     .display-frame {
       box-sizing: border-box;
-      min-height: 100vh;
+      height: 100%;
       padding-bottom: 228px;
     }
 
