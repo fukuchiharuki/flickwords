@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   ssr: false,
   app: {
-    baseURL: '/flick-input-ja/'
+    baseURL: '/'
   },
   css: ['@/assets/styles/main.scss'],
   vite: {

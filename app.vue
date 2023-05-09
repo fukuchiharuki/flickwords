@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app">
     <VirtualConsole>
       <template #display>
         <VirtualDisplay :text="text" />
