@@ -1,6 +1,6 @@
 <template>
   <div class="display">
-    <div class="title">Flick Input - ja</div>
+    <div class="title">jWORDLE</div>
     <div class="text">{{ text }}<span class="cursor">|</span></div>
   </div>
 </template>
@@ -14,9 +14,12 @@
 <style lang="scss" scoped>
   .title {
     padding: 8px 0;
+    border-bottom: 1px solid lightgray;
     text-align: center;
     font-size: large;
-    border-bottom: 1px solid lightgray;
+    font-family: 'Cabin', sans-serif;
+    font-weight: bold;
+    letter-spacing: 2px;
   }
 
   .text {
