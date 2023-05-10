@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-  const { text, input, backspace, newline } = useTextEdit()
+  const { text, input, backspace, newline } = useTextEdit(5)
 
   function onInput(args: { type: string; value: string }) {
     const { type, value } = args
