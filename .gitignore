@@ -1,3 +1,4 @@
+public/dictionaries
 node_modules
 *.log*
 .nuxt
