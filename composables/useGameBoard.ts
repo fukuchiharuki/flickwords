@@ -15,15 +15,7 @@ export default function useGameBoard(text: Ref<string>): {
 } {
   const base = reactive(initialAnser())
   const cursor = ref(0)
-  const answer = computed<Answer>(() => {
-    const words = [...base.words] as Word[]
-    words[cursor.value] = {
-      chars: [...text.value.padEnd(5, ' ')].map((c) => ({
-        value: c.trim()
-      }))
-    }
-    return { words }
-  })
+  const answer = computedAnswer(base, cursor, text)
   return {
     answer
   }
@@ -37,4 +29,20 @@ function initialAnser(): Answer {
       }))
     }))
   }
+}
+
+function computedAnswer(
+  base: Answer,
+  cursor: Ref<number>,
+  text: Ref<string>
+): ComputedRef<Answer> {
+  return computed<Answer>(() => {
+    const words = [...base.words] as Word[]
+    words[cursor.value] = {
+      chars: [...text.value.padEnd(5, ' ')].map((c) => ({
+        value: c.trim()
+      }))
+    }
+    return { words }
+  })
 }
