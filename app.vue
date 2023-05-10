@@ -2,7 +2,7 @@
   <div class="app">
     <VirtualConsole>
       <template #display>
-        <VirtualDisplay :text="text" />
+        <VirtualDisplay :answer="answer" />
       </template>
       <template #keyboard>
         <VirtualKeyboard @input="onInput" />
@@ -13,6 +13,7 @@
 
 <script setup lang="ts">
   const { text, input, backspace } = useTextEdit(5)
+  const { answer } = useGameBoard(text)
 
   function onInput(args: { type: string; value: string }) {
     const { type, value } = args

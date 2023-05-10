@@ -2,14 +2,16 @@
   <div class="display">
     <div class="title">jWORDLE - rev.1</div>
     <div class="container">
-      <GameBoard />
+      <GameBoard :answer="answer" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+  import { Answer } from '../composables/useGameBoard'
+
   defineProps<{
-    text: string
+    answer: Answer
   }>()
 </script>
 
