@@ -1,7 +1,10 @@
 <template>
   <div
     class="tile animate__animated"
-    :class="{ animate__bounceIn: char.value }"
+    :class="{
+      animate__bounceIn: char.value,
+      unused: char.unused
+    }"
   >
     <div class="char">{{ char.value }}</div>
   </div>
@@ -25,6 +28,16 @@
     justify-content: space-around;
     box-sizing: border-box;
     border: 2px solid lightgray;
+
+    &.unused {
+      background-color: darkgray;
+      border-color: darkgray;
+      color: white;
+
+      .char::before {
+        content: '－';
+      }
+    }
 
     .char {
       text-align: center;

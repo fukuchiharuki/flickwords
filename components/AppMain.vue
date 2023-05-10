@@ -10,8 +10,12 @@
 </template>
 
 <script setup lang="ts">
-  const { text, input, backspace } = useTextEdit(5)
-  const { answer, enter } = useGameBoard(text)
+  const props = defineProps<{
+    wordLength: number
+  }>()
+
+  const { text, input, backspace } = useTextEdit(props.wordLength)
+  const { answer, enter } = useGameBoard(props.wordLength, text)
 
   function onInput(args: { type: string; value: string }) {
     const { type, value } = args
