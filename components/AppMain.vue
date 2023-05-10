@@ -12,6 +12,7 @@
 <script setup lang="ts">
   const props = defineProps<{
     wordLength: number
+    dictionary: string[]
   }>()
 
   const { text, input, backspace } = useTextEdit(props.wordLength)

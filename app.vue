@@ -1,10 +1,15 @@
 <template>
   <div class="app">
-    <AppMain v-if="ready" :word-length="wordLength" />
+    <AppMain
+      v-if="dictionary.length"
+      :word-length="wordLength"
+      :dictionary="dictionary"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
   const wordLength = 5
-  const { data, ready } = await useDictionary(wordLength)
+  const { data } = await useDictionary(wordLength)
+  const dictionary = computed(() => data.value || [])
 </script>
