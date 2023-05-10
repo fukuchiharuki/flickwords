@@ -1,53 +1,22 @@
 <template>
   <div class="game-wrapper">
     <div class="game-board">
-      <div class="word-row">
-        <div class="word-col"></div>
-        <div class="word-col"></div>
-        <div class="word-col"></div>
-        <div class="word-col"></div>
-        <div class="word-col"></div>
-      </div>
-      <div class="word-row">
-        <div class="word-col"></div>
-        <div class="word-col"></div>
-        <div class="word-col"></div>
-        <div class="word-col"></div>
-        <div class="word-col"></div>
-      </div>
-      <div class="word-row">
-        <div class="word-col"></div>
-        <div class="word-col"></div>
-        <div class="word-col"></div>
-        <div class="word-col"></div>
-        <div class="word-col"></div>
-      </div>
-      <div class="word-row">
-        <div class="word-col"></div>
-        <div class="word-col"></div>
-        <div class="word-col"></div>
-        <div class="word-col"></div>
-        <div class="word-col"></div>
-      </div>
-      <div class="word-row">
-        <div class="word-col"></div>
-        <div class="word-col"></div>
-        <div class="word-col"></div>
-        <div class="word-col"></div>
-        <div class="word-col"></div>
-      </div>
-      <div class="word-row">
-        <div class="word-col"></div>
-        <div class="word-col"></div>
-        <div class="word-col"></div>
-        <div class="word-col"></div>
-        <div class="word-col"></div>
-      </div>
+      <BoardRow
+        v-for="(word, wordIndex) in answer.words"
+        :key="wordIndex"
+        :word="word"
+      />
     </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { Answer } from '../composables/useGameBoard'
+
+  defineProps<{
+    answer: Answer
+  }>()
+</script>
 
 <style lang="scss" scoped>
   .game-wrapper {
@@ -64,29 +33,6 @@
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
-    }
-  }
-
-  .word-row {
-    & + .word-row {
-      margin-top: 4px;
-    }
-
-    flex: 1;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-
-    .word-col {
-      & + .word-col {
-        margin-left: 4px;
-      }
-
-      flex: 1;
-      height: 100%;
-      box-sizing: border-box;
-      border: 2px solid lightgray;
     }
   }
 </style>

@@ -1,4 +1,4 @@
-export default function useTextEdit() {
+export default function useTextEdit(maxLength: number) {
   const transformingMap = {
     か: { 小: 'が', '゛': 'が', '゜': 'が' },
     き: { 小: 'ぎ', '゛': 'ぎ', '゜': 'ぎ' },
@@ -76,7 +76,7 @@ export default function useTextEdit() {
 
   function input(value: string) {
     if (!['小', '゛', '゜'].includes(value)) {
-      text.value = text.value + value
+      if (text.value.length < maxLength) text.value = text.value + value
     } else {
       if (text.value.length === 0) return
       const lastChar = text.value.slice(-1)

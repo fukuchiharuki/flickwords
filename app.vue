@@ -2,7 +2,7 @@
   <div class="app">
     <VirtualConsole>
       <template #display>
-        <VirtualDisplay :text="text" />
+        <VirtualDisplay :answer="answer" />
       </template>
       <template #keyboard>
         <VirtualKeyboard @input="onInput" />
@@ -12,12 +12,12 @@
 </template>
 
 <script setup lang="ts">
-  const { text, input, backspace, newline } = useTextEdit()
+  const { text, input, backspace } = useTextEdit(5)
+  const { answer } = useGameBoard(text)
 
   function onInput(args: { type: string; value: string }) {
     const { type, value } = args
     if (type === 'kana') input(value)
     if (type === 'func' && value === 'backspace') backspace()
-    if (type === 'func' && value === 'enter') newline()
   }
 </script>

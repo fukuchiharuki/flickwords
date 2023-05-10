@@ -19,5 +19,7 @@
     "prettier": "^2.8.8",
     "sass": "^1.62.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "animate.css": "^4.1.1"
+  }
 }
