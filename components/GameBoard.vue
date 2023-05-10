@@ -64,7 +64,6 @@
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
     }
   }
 
@@ -76,7 +75,6 @@
     flex: 1;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
 
     .word-col {
       & + .word-col {
