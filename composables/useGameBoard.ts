@@ -17,13 +17,15 @@ export default function useGameBoard(
 ): {
   answer: ComputedRef<Answer>
   enter: () => void
+  reset: () => void
 } {
   const base = reactive(initialAnser(wordLength))
   const cursor = ref(0)
   const answer = computedAnswer(base, cursor, text, wordLength)
   return {
     answer,
-    enter
+    enter,
+    reset
   }
 
   function enter() {
@@ -31,6 +33,12 @@ export default function useGameBoard(
       base.words[cursor.value] = wordFrom(text.value, wordLength)
     text.value = ''
     cursor.value = cursor.value + 1
+  }
+
+  function reset() {
+    text.value = ''
+    base.words = initialAnser(wordLength).words
+    cursor.value = 0
   }
 }
 
