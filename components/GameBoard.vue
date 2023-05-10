@@ -1,23 +1,11 @@
 <template>
   <div class="game-wrapper">
     <div class="game-board">
-      <div
+      <BoardRow
         v-for="(word, wordIndex) in answer.words"
         :key="wordIndex"
-        class="word-row"
-      >
-        <div
-          v-for="(char, charIndex) in word.chars"
-          :key="charIndex"
-          class="word-col"
-        >
-          <div class="tile">
-            <div class="char">
-              {{ char.value }}
-            </div>
-          </div>
-        </div>
-      </div>
+        :word="word"
+      />
     </div>
   </div>
 </template>
@@ -45,40 +33,6 @@
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-    }
-  }
-
-  .word-row {
-    & + .word-row {
-      margin-top: 4px;
-    }
-
-    flex: 1;
-    display: flex;
-    flex-direction: row;
-
-    .word-col {
-      & + .word-col {
-        margin-left: 4px;
-      }
-
-      flex: 1;
-      height: 100%;
-    }
-    .tile {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      box-sizing: border-box;
-      border: 2px solid lightgray;
-
-      .char {
-        text-align: center;
-        font-weight: bold;
-        font-size: large;
-      }
     }
   }
 </style>
