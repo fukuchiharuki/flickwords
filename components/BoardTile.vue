@@ -3,9 +3,7 @@
     class="tile animate__animated"
     :class="{ animate__bounceIn: char.value }"
   >
-    <div class="char">
-      {{ char.value }}
-    </div>
+    <div class="char">{{ char.value }}</div>
   </div>
 </template>
 
@@ -31,7 +29,7 @@
     .char {
       text-align: center;
       font-weight: bold;
-      font-size: large;
+      font-size: medium;
     }
 
     &.animate__bounceIn {
