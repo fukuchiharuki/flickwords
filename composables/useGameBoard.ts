@@ -23,7 +23,7 @@ export default function useGameBoard(text: Ref<string>): {
   }
 
   function enter() {
-    if (cursor.value < 6) base.words[cursor.value] = word(text.value)
+    if (cursor.value < 6) base.words[cursor.value] = wordFrom(text.value)
     text.value = ''
     cursor.value = cursor.value + 1
   }
@@ -47,12 +47,12 @@ function computedAnswer(
   return computed<Answer>(() => {
     if (cursor.value >= 6) return base
     const words = [...base.words] as Word[]
-    words[cursor.value] = word(text.value)
+    words[cursor.value] = wordFrom(text.value)
     return { words }
   })
 }
 
-function word(text: string): Word {
+function wordFrom(text: string): Word {
   return {
     chars: [...text.padEnd(5, ' ')].map((c) => ({
       value: c.trim()
