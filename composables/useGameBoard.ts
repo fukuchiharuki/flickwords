@@ -17,7 +17,6 @@ export default function useGameBoard(
   text: Ref<string>
 ): {
   answer: ComputedRef<Answer>
-  enter: () => void
   shake: () => void
   compare: (results: string[][]) => void
   reset: () => void
@@ -28,18 +27,9 @@ export default function useGameBoard(
   const answer = computedAnswer(base, cursor, _shake, text, wordLength)
   return {
     answer,
-    enter,
     shake,
     compare,
     reset
-  }
-
-  // TODO: compareに置き換える
-  function enter() {
-    if (cursor.value < 6)
-      base.words[cursor.value] = wordFrom(text.value, wordLength.value)
-    text.value = ''
-    cursor.value = cursor.value + 1
   }
 
   function shake() {
@@ -51,6 +41,14 @@ export default function useGameBoard(
 
   function compare(results: string[][]) {
     console.log(results)
+    nextWord()
+  }
+
+  function nextWord() {
+    if (cursor.value < 6)
+      base.words[cursor.value] = wordFrom(text.value, wordLength.value)
+    text.value = ''
+    cursor.value = cursor.value + 1
   }
 
   function reset() {
