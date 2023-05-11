@@ -9,6 +9,8 @@
 </template>
 
 <script setup lang="ts">
+  import 'animate.css'
+
   const wordLength = 5
   const { data } = await useDictionary(wordLength)
   const dictionary = computed(() => data.value || [])

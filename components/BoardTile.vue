@@ -12,7 +12,6 @@
 
 <script setup lang="ts">
   import { Char } from '../composables/useGameBoard'
-  import 'animate.css'
 
   defineProps<{
     char: Char
