@@ -1,3 +1,4 @@
+import useGameMaster from '../composables/useGameMaster';
 <template>
   <VirtualConsole>
     <template #display>
@@ -15,13 +16,15 @@
     dictionary: string[]
   }>()
 
-  const { text, input, backspace } = useTextEdit(props.wordLength)
-  const { answer, shake } = useGameBoard(props.wordLength, text)
+  const { wordLength, dictionary } = toRefs(props)
+  const { text, input, backspace } = useTextEdit(wordLength)
+  const { answer, shake, compare } = useGameBoard(wordLength, text)
+  const { enter } = useGameMaster(wordLength, dictionary, text, shake, compare)
 
   function onInput(args: { type: string; value: string }) {
     const { type, value } = args
     if (type === 'kana') input(value)
     if (type === 'func' && value === 'backspace') backspace()
-    if (type === 'func' && value === 'enter') shake()
+    if (type === 'func' && value === 'enter') enter()
   }
 </script>

@@ -13,15 +13,16 @@ export type Answer = {
 }
 
 export default function useGameBoard(
-  wordLength: number,
+  wordLength: Ref<number>,
   text: Ref<string>
 ): {
   answer: ComputedRef<Answer>
   enter: () => void
   shake: () => void
+  compare: (results: string[][]) => void
   reset: () => void
 } {
-  const base = reactive(initialAnser(wordLength))
+  const base = reactive(initialAnser(wordLength.value))
   const cursor = ref(0)
   const _shake = ref(false)
   const answer = computedAnswer(base, cursor, _shake, text, wordLength)
@@ -29,12 +30,14 @@ export default function useGameBoard(
     answer,
     enter,
     shake,
+    compare,
     reset
   }
 
+  // TODO: compareに置き換える
   function enter() {
     if (cursor.value < 6)
-      base.words[cursor.value] = wordFrom(text.value, wordLength)
+      base.words[cursor.value] = wordFrom(text.value, wordLength.value)
     text.value = ''
     cursor.value = cursor.value + 1
   }
@@ -46,9 +49,13 @@ export default function useGameBoard(
     }, 400)
   }
 
+  function compare(results: string[][]) {
+    console.log(results)
+  }
+
   function reset() {
     text.value = ''
-    base.words = initialAnser(wordLength).words
+    base.words = initialAnser(wordLength.value).words
     cursor.value = 0
   }
 }
@@ -70,13 +77,13 @@ function computedAnswer(
   cursor: Ref<number>,
   _shake: Ref<boolean>,
   text: Ref<string>,
-  wordLength: number
+  wordLength: Ref<number>
 ): ComputedRef<Answer> {
   return computed<Answer>(() => {
     if (cursor.value >= 6) return base
     const words = [...base.words] as Word[]
     words[cursor.value] = {
-      ...wordFrom(text.value, wordLength),
+      ...wordFrom(text.value, wordLength.value),
       shake: _shake.value
     }
     return { words }
