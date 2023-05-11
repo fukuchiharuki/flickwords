@@ -92,19 +92,25 @@ export default function useGameMaster(
   }
 
   function enter() {
-    if (wordLength.value > text.value.length) shake()
-    const textChars = [...text.value]
-    const correctChars = [...correct.value]
-    const results = textChars.map((char, index) => {
-      if (regulated(char) === correctChars[index]) return ['correct']
-      const result = [
-        vowel(char) === vowel(correctChars[index]) ? 'vowel' : null,
-        correctChars.includes(char) ? 'present' : null
-      ].filter((it) => it) as string[]
-      return result.length ? result : ['absent']
-    })
-    compare(results)
+    if (wordLength.value > text.value.length) {
+      shake()
+      return
+    }
+    compare(results(text.value, correct.value))
   }
+}
+
+function results(text: string, correct: string): string[][] {
+  const textChars = [...text]
+  const correctChars = [...correct]
+  return textChars.map((char, index) => {
+    if (regulated(char) === correctChars[index]) return ['correct']
+    const result = [
+      vowel(char) === vowel(correctChars[index]) ? 'vowel' : null,
+      correctChars.includes(char) ? 'present' : null
+    ].filter((it) => it) as string[]
+    return result.length ? result : ['absent']
+  })
 }
 
 function regulated(char: string) {
