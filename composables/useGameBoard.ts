@@ -5,6 +5,7 @@ export type Char = {
 
 export type Word = {
   chars: Char[]
+  shake: boolean
 }
 
 export type Answer = {
@@ -17,14 +18,17 @@ export default function useGameBoard(
 ): {
   answer: ComputedRef<Answer>
   enter: () => void
+  shake: () => void
   reset: () => void
 } {
   const base = reactive(initialAnser(wordLength))
   const cursor = ref(0)
-  const answer = computedAnswer(base, cursor, text, wordLength)
+  const _shake = ref(false)
+  const answer = computedAnswer(base, cursor, _shake, text, wordLength)
   return {
     answer,
     enter,
+    shake,
     reset
   }
 
@@ -33,6 +37,13 @@ export default function useGameBoard(
       base.words[cursor.value] = wordFrom(text.value, wordLength)
     text.value = ''
     cursor.value = cursor.value + 1
+  }
+
+  function shake() {
+    _shake.value = true
+    setTimeout(() => {
+      _shake.value = false
+    }, 400)
   }
 
   function reset() {
@@ -48,7 +59,8 @@ function initialAnser(wordLength: number): Answer {
       chars: [...Array(5)].map((_, index) => ({
         value: '',
         unused: index >= wordLength
-      }))
+      })),
+      shake: false
     }))
   }
 }
@@ -56,13 +68,17 @@ function initialAnser(wordLength: number): Answer {
 function computedAnswer(
   base: Answer,
   cursor: Ref<number>,
+  _shake: Ref<boolean>,
   text: Ref<string>,
   wordLength: number
 ): ComputedRef<Answer> {
   return computed<Answer>(() => {
     if (cursor.value >= 6) return base
     const words = [...base.words] as Word[]
-    words[cursor.value] = wordFrom(text.value, wordLength)
+    words[cursor.value] = {
+      ...wordFrom(text.value, wordLength),
+      shake: _shake.value
+    }
     return { words }
   })
 }
@@ -72,6 +88,7 @@ function wordFrom(text: string, wordLength: number): Word {
     chars: [...text.padEnd(5, ' ')].map((c, index) => ({
       value: c.trim(),
       unused: index >= wordLength
-    }))
+    })),
+    shake: false
   }
 }

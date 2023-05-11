@@ -16,12 +16,12 @@
   }>()
 
   const { text, input, backspace } = useTextEdit(props.wordLength)
-  const { answer, enter } = useGameBoard(props.wordLength, text)
+  const { answer, shake } = useGameBoard(props.wordLength, text)
 
   function onInput(args: { type: string; value: string }) {
     const { type, value } = args
     if (type === 'kana') input(value)
     if (type === 'func' && value === 'backspace') backspace()
-    if (type === 'func' && value === 'enter') enter()
+    if (type === 'func' && value === 'enter') shake()
   }
 </script>

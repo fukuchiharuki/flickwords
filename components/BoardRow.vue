@@ -1,5 +1,8 @@
 <template>
-  <div class="board-row">
+  <div
+    class="board-row animate__animated"
+    :class="{ animate__shakeX: word.shake }"
+  >
     <BoardCol
       v-for="(char, charIndex) in word.chars"
       :key="charIndex"
@@ -25,5 +28,9 @@
     flex: 1;
     display: flex;
     flex-direction: row;
+
+    &.animate__shakeX {
+      --animate-duration: 0.4s;
+    }
   }
 </style>
