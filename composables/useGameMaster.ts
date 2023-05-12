@@ -79,7 +79,7 @@ export default function useGameMaster(
   dictionary: Ref<string[]>,
   text: Ref<string>,
   shake: () => void,
-  compare: (results: string[][]) => boolean | null
+  compare: (results: string[][]) => number | null
 ): {
   correct: Ref<string>
   enter: () => void
@@ -96,8 +96,11 @@ export default function useGameMaster(
       shake()
       return
     }
-    const status = compare(results(text.value, correct.value))
-    if (status) alert('GAME OVER')
+    const duration = compare(results(text.value, correct.value))
+    if (duration)
+      setTimeout(() => {
+        alert('GAME OVER')
+      }, duration)
   }
 }
 

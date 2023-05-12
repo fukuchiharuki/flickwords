@@ -19,7 +19,7 @@ export default function useGameBoard(
 ): {
   answer: ComputedRef<Answer>
   shake: () => void
-  compare: (results: string[][]) => boolean | null
+  compare: (results: string[][]) => number | null
   reset: () => void
 } {
   const base = reactive(initialAnser(wordLength.value))
@@ -40,25 +40,27 @@ export default function useGameBoard(
     }, 400)
   }
 
-  function compare(results: string[][]): boolean | null {
+  function compare(results: string[][]): number | null {
     const currentWord = cursor.value
     console.log(currentWord, results)
     nextWord()
-    openWord(currentWord, results)
+    const duration = openWord(currentWord, results)
     const gameClear = results
       .flat()
       .reduce((acc, result) => acc && result === 'correct', true)
     const gameOver = outOfRange(cursor)
-    if (gameClear || gameOver) return true
+    if (gameClear || gameOver) return duration
     return null
   }
 
-  function openWord(targetWord: number, results: string[][]) {
+  function openWord(targetWord: number, results: string[][]): number {
+    const delay = 360
     results.forEach((result, index) => {
       setTimeout(() => {
         base.words[targetWord].chars[index].result = result
-      }, 360 * index)
+      }, delay * index)
     })
+    return delay * results.length
   }
 
   function nextWord() {
