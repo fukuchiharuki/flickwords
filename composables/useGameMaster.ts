@@ -1,80 +1,5 @@
 import { Status } from './useGameBoard'
-
-const regulationMap = {
-  が: 'か',
-  ぎ: 'き',
-  ぐ: 'く',
-  げ: 'け',
-  ご: 'こ',
-  ざ: 'さ',
-  じ: 'し',
-  ず: 'す',
-  ぜ: 'せ',
-  ぞ: 'そ',
-  だ: 'た',
-  ぢ: 'ち',
-  づ: 'つ',
-  で: 'て',
-  ど: 'と',
-  ば: 'は',
-  び: 'ひ',
-  ぶ: 'ふ',
-  べ: 'へ',
-  ぼ: 'ほ',
-  ぱ: 'は',
-  ぴ: 'ひ',
-  ぷ: 'ふ',
-  ぺ: 'へ',
-  ぽ: 'ほ',
-  ゃ: 'や',
-  ゅ: 'ゆ',
-  ょ: 'よ',
-  ぁ: 'あ',
-  ぃ: 'い',
-  ぅ: 'う',
-  ぇ: 'え',
-  ぉ: 'お',
-  ゔ: 'う',
-  っ: 'つ'
-} as { [key: string]: string }
-
-const vowelMap = {
-  か: 'あ',
-  き: 'い',
-  く: 'う',
-  け: 'え',
-  こ: 'お',
-  さ: 'あ',
-  し: 'い',
-  す: 'う',
-  せ: 'え',
-  そ: 'お',
-  た: 'あ',
-  ち: 'い',
-  つ: 'う',
-  て: 'え',
-  と: 'お',
-  な: 'あ',
-  に: 'い',
-  ぬ: 'う',
-  ね: 'え',
-  の: 'お',
-  は: 'あ',
-  ひ: 'い',
-  ふ: 'う',
-  へ: 'え',
-  ほ: 'お',
-  ま: 'あ',
-  み: 'い',
-  む: 'う',
-  め: 'え',
-  も: 'お',
-  や: 'あ',
-  ゆ: 'う',
-  よ: 'お',
-  わ: 'あ',
-  を: 'お'
-} as { [key: string]: string }
+import { regulationMap, vowelMap } from '~/consts/charMap'
 
 export default function useGameMaster(
   wordLength: Ref<number>,
@@ -122,6 +47,7 @@ function rand(seed: string): number {
 }
 
 function correctOf(dictionary: string[], rand: number): string {
+  console.log(rand % dictionary.length, dictionary[rand % dictionary.length])
   return dictionary[rand % dictionary.length]
 }
 
