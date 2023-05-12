@@ -1,5 +1,5 @@
 import { Status } from './useGameBoard'
-import { regulationMap, vowelMap } from '~/consts/charMap'
+import { consonantMap, regulationMap, vowelMap } from '~/consts/charMap'
 
 export default function useGameMaster(
   wordLength: Ref<number>,
@@ -58,6 +58,7 @@ function results(text: string, correct: string): string[][] {
     if (regulated(char) === correctChars[index]) return ['correct']
     return [
       vowel(char) === vowel(correctChars[index]) ? 'vowel' : null,
+      consonant(char) === consonant(correctChars[index]) ? 'consonant' : null,
       correctChars.includes(regulated(char)) ? 'present' : 'absent'
     ].filter((it) => it) as string[]
   })
@@ -69,4 +70,8 @@ function regulated(char: string) {
 
 function vowel(char: string) {
   return vowelMap[regulated(char)] || char
+}
+
+function consonant(char: string) {
+  return consonantMap[regulated(char)] || char
 }

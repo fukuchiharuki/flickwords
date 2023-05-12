@@ -8,6 +8,7 @@
       present: char.result.includes('present'),
       absent: char.result.includes('absent'),
       vowel: char.result.includes('vowel'),
+      consonant: char.result.includes('consonant'),
       unused: char.unused
     }"
   >
@@ -64,6 +65,17 @@
         );
         border-color: #c9b458 #6aaa64 #6aaa64 #c9b458;
       }
+
+      &.consonant {
+        background: linear-gradient(
+          135deg,
+          #6aaa64 0%,
+          #6aaa64 50%,
+          #c9b458 50%,
+          #c9b458 1000%
+        );
+        border-color: #6aaa64 #c9b458 #c9b458 #6aaa64;
+      }
     }
 
     &.absent {
@@ -80,6 +92,17 @@
           #6aaa64 100%
         );
         border-color: #86888a #6aaa64 #6aaa64 #86888a;
+      }
+
+      &.consonant {
+        background: linear-gradient(
+          135deg,
+          #6aaa64 0%,
+          #6aaa64 50%,
+          #86888a 50%,
+          #86888a 100%
+        );
+        border-color: #6aaa64 #86888a #86888a #6aaa64;
       }
     }
 
