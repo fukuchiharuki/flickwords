@@ -1,3 +1,5 @@
+import { Status } from './useGameBoard'
+
 const regulationMap = {
   が: 'か',
   ぎ: 'き',
@@ -79,14 +81,17 @@ export default function useGameMaster(
   dictionary: Ref<string[]>,
   text: Ref<string>,
   shake: () => void,
-  compare: (results: string[][]) => number | null
+  compare: (results: string[][]) => Status
 ): {
+  keyLock: Ref<boolean>
   correct: Ref<string>
   enter: () => void
 } {
+  const keyLock = ref(false)
   const correct = ref(dictionary.value[0])
 
   return {
+    keyLock,
     correct,
     enter
   }
@@ -96,11 +101,12 @@ export default function useGameMaster(
       shake()
       return
     }
-    const duration = compare(results(text.value, correct.value))
-    if (duration)
-      setTimeout(() => {
-        alert('GAME OVER')
-      }, duration)
+    keyLock.value = true
+    const status = compare(results(text.value, correct.value))
+    setTimeout(() => {
+      if (!status.gameOver) keyLock.value = false
+      if (status.gameOver) alert('GAME OVER')
+    }, status.duration)
   }
 }
 

@@ -13,13 +13,21 @@ export type Answer = {
   words: Word[]
 }
 
+export type Score = {}
+
+export type Status = {
+  duration: number
+  gameOver: boolean
+  score: Score
+}
+
 export default function useGameBoard(
   wordLength: Ref<number>,
   text: Ref<string>
 ): {
   answer: ComputedRef<Answer>
   shake: () => void
-  compare: (results: string[][]) => number | null
+  compare: (results: string[][]) => Status
   reset: () => void
 } {
   const base = reactive(initialAnser(wordLength.value))
@@ -40,17 +48,19 @@ export default function useGameBoard(
     }, 400)
   }
 
-  function compare(results: string[][]): number | null {
+  function compare(results: string[][]): Status {
     const currentWord = cursor.value
-    console.log(currentWord, results)
     nextWord()
     const duration = openWord(currentWord, results)
     const gameClear = results
       .flat()
       .reduce((acc, result) => acc && result === 'correct', true)
     const gameOver = outOfRange(cursor)
-    if (gameClear || gameOver) return duration
-    return null
+    return {
+      duration,
+      gameOver: gameClear || gameOver,
+      score: {}
+    }
   }
 
   function openWord(targetWord: number, results: string[][]): number {
