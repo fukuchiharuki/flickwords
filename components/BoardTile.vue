@@ -71,12 +71,16 @@
       font-size: medium;
     }
 
+    &.animate__animated {
+      opacity: 1 !important;
+    }
+
     &.animate__bounceIn {
       --animate-duration: 0.2s;
     }
 
     &.animate__flipInX {
-      --animate-duration: 1s;
+      --animate-duration: 0.8s;
     }
   }
 </style>
