@@ -18,7 +18,7 @@ export default function useGameBoard(
 ): {
   answer: ComputedRef<Answer>
   shake: () => void
-  compare: (results: string[][]) => void
+  compare: (results: string[][]) => boolean | null
   reset: () => void
 } {
   const base = reactive(initialAnser(wordLength.value))
@@ -39,13 +39,20 @@ export default function useGameBoard(
     }, 400)
   }
 
-  function compare(results: string[][]) {
-    console.log(results)
+  function compare(results: string[][]): boolean | null {
+    const targetRow = cursor.value
+    console.log(targetRow, results)
     nextWord()
+    const gameClear = results
+      .flat()
+      .reduce((acc, result) => acc && result === 'correct', true)
+    const gameOver = outOfRange(cursor)
+    if (gameClear || gameOver) return true
+    return null
   }
 
   function nextWord() {
-    if (cursor.value < 6)
+    if (!outOfRange(cursor))
       base.words[cursor.value] = wordFrom(text.value, wordLength.value)
     text.value = ''
     cursor.value = cursor.value + 1
@@ -78,7 +85,7 @@ function computedAnswer(
   wordLength: Ref<number>
 ): ComputedRef<Answer> {
   return computed<Answer>(() => {
-    if (cursor.value >= 6) return base
+    if (outOfRange(cursor)) return base
     const words = [...base.words] as Word[]
     words[cursor.value] = {
       ...wordFrom(text.value, wordLength.value),
@@ -96,4 +103,8 @@ function wordFrom(text: string, wordLength: number): Word {
     })),
     shake: false
   }
+}
+
+function outOfRange(cursor: Ref<number>): boolean {
+  return cursor.value >= 6
 }
