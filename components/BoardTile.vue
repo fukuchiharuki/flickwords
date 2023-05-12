@@ -53,16 +53,34 @@
       color: white;
       background-color: #c9b458;
       border-color: #c9b458;
+
+      &.vowel {
+        background: linear-gradient(
+          135deg,
+          #c9b458 0%,
+          #c9b458 50%,
+          #6aaa64 50%,
+          #6aaa64 100%
+        );
+        border-color: #c9b458 #6aaa64 #6aaa64 #c9b458;
+      }
     }
 
     &.absent {
       color: white;
       background-color: #86888a;
       border-color: #86888a;
-    }
 
-    &.vowel {
-      border-bottom-right-radius: 25%;
+      &.vowel {
+        background: linear-gradient(
+          135deg,
+          #86888a 0%,
+          #86888a 50%,
+          #6aaa64 50%,
+          #6aaa64 100%
+        );
+        border-color: #86888a #6aaa64 #6aaa64 #86888a;
+      }
     }
 
     .char {
