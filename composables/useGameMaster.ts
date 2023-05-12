@@ -106,11 +106,10 @@ function results(text: string, correct: string): string[][] {
   const correctChars = [...correct]
   return textChars.map((char, index) => {
     if (regulated(char) === correctChars[index]) return ['correct']
-    const result = [
+    return [
       vowel(char) === vowel(correctChars[index]) ? 'vowel' : null,
-      correctChars.includes(char) ? 'present' : null
+      correctChars.includes(regulated(char)) ? 'present' : 'absent'
     ].filter((it) => it) as string[]
-    return result.length ? result : ['absent']
   })
 }
 

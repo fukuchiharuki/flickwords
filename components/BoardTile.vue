@@ -2,7 +2,12 @@
   <div
     class="tile animate__animated"
     :class="{
-      animate__bounceIn: char.value,
+      animate__bounceIn: char.value && !char.result.length,
+      animate__flipInX: char.result.length,
+      correct: char.result.includes('correct'),
+      present: char.result.includes('present'),
+      absent: char.result.includes('absent'),
+      vowel: char.result.includes('vowel'),
       unused: char.unused
     }"
   >
@@ -38,6 +43,28 @@
       }
     }
 
+    &.correct {
+      color: white;
+      background-color: #6aaa64;
+      border-color: #6aaa64;
+    }
+
+    &.present {
+      color: white;
+      background-color: #c9b458;
+      border-color: #c9b458;
+    }
+
+    &.absent {
+      color: white;
+      background-color: #86888a;
+      border-color: #86888a;
+    }
+
+    &.vowel {
+      border-bottom-right-radius: 25%;
+    }
+
     .char {
       text-align: center;
       font-weight: bold;
@@ -46,6 +73,10 @@
 
     &.animate__bounceIn {
       --animate-duration: 0.2s;
+    }
+
+    &.animate__flipInX {
+      --animate-duration: 1s;
     }
   }
 </style>

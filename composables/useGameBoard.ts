@@ -1,6 +1,7 @@
 export type Char = {
   value: string
   unused: boolean
+  result: string[]
 }
 
 export type Word = {
@@ -40,15 +41,24 @@ export default function useGameBoard(
   }
 
   function compare(results: string[][]): boolean | null {
-    const targetRow = cursor.value
-    console.log(targetRow, results)
+    const currentWord = cursor.value
+    console.log(currentWord, results)
     nextWord()
+    openWord(currentWord, results)
     const gameClear = results
       .flat()
       .reduce((acc, result) => acc && result === 'correct', true)
     const gameOver = outOfRange(cursor)
     if (gameClear || gameOver) return true
     return null
+  }
+
+  function openWord(targetWord: number, results: string[][]) {
+    results.forEach((result, index) => {
+      setTimeout(() => {
+        base.words[targetWord].chars[index].result = result
+      }, 360 * index)
+    })
   }
 
   function nextWord() {
@@ -70,7 +80,8 @@ function initialAnser(wordLength: number): Answer {
     words: [...Array(6)].map((_) => ({
       chars: [...Array(5)].map((_, index) => ({
         value: '',
-        unused: index >= wordLength
+        unused: index >= wordLength,
+        result: []
       })),
       shake: false
     }))
@@ -99,7 +110,8 @@ function wordFrom(text: string, wordLength: number): Word {
   return {
     chars: [...text.padEnd(5, ' ')].map((c, index) => ({
       value: c.trim(),
-      unused: index >= wordLength
+      unused: index >= wordLength,
+      result: []
     })),
     shake: false
   }
