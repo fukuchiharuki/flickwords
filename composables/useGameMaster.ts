@@ -84,15 +84,13 @@ export default function useGameMaster(
   compare: (results: string[][]) => Status
 ): {
   keyLock: Ref<boolean>
-  correct: Ref<string>
   enter: () => void
 } {
   const keyLock = ref(false)
-  const correct = ref(dictionary.value[0])
+  const correct = ref(correctOf(dictionary.value, rand(seed())))
 
   return {
     keyLock,
-    correct,
     enter
   }
 
@@ -108,6 +106,23 @@ export default function useGameMaster(
       if (status.gameOver) alert('GAME OVER')
     }, status.duration)
   }
+}
+
+function seed(): string {
+  const dt = new Date()
+  const yyyy = dt.getFullYear()
+  const MM = ('00' + (dt.getMonth() + 1)).slice(-2)
+  const dd = ('00' + dt.getDate()).slice(-2)
+  return (yyyy + MM + dd).slice(-6)
+}
+
+function rand(seed: string): number {
+  const rand = [...seed].reverse().join('')
+  return Number(rand)
+}
+
+function correctOf(dictionary: string[], rand: number): string {
+  return dictionary[rand % dictionary.length]
 }
 
 function results(text: string, correct: string): string[][] {
