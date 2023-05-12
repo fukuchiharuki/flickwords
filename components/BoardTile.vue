@@ -77,6 +77,7 @@
 
     &.animate__bounceIn {
       --animate-duration: 0.2s;
+      border-color: #86888a;
     }
 
     &.animate__flipInX {
