@@ -1,7 +1,10 @@
 <template>
   <div
     class="board-row animate__animated"
-    :class="{ animate__shakeX: word.shake }"
+    :class="{
+      animate__shakeX: word.shake,
+      animate__bounce: word.bounce
+    }"
   >
     <BoardCol
       v-for="(char, charIndex) in word.chars"

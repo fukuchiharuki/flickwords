@@ -7,6 +7,7 @@ export type Char = {
 export type Word = {
   chars: Char[]
   shake: boolean
+  bounce: boolean
 }
 
 export type Answer = {
@@ -49,16 +50,24 @@ export default function useGameBoard(
   function compare(results: string[][]): Status {
     const currentWord = cursor.value
     nextWord()
-    const duration = openWord(currentWord, results)
+    let duration = openWord(currentWord, results)
     const gameClear = results
       .flat()
       .reduce((acc, result) => acc && result === 'correct', true)
     const gameOver = outOfRange(cursor)
+    if (gameClear) duration = bounceWord(currentWord, duration)
     return {
       duration,
       gameOver: gameClear || gameOver,
       answer: base
     }
+  }
+
+  function nextWord() {
+    if (!outOfRange(cursor))
+      base.words[cursor.value] = wordFrom(text.value, wordLength.value)
+    text.value = ''
+    cursor.value = cursor.value + 1
   }
 
   function openWord(targetWord: number, results: string[][]): number {
@@ -71,11 +80,15 @@ export default function useGameBoard(
     return delay * results.length
   }
 
-  function nextWord() {
-    if (!outOfRange(cursor))
-      base.words[cursor.value] = wordFrom(text.value, wordLength.value)
-    text.value = ''
-    cursor.value = cursor.value + 1
+  function bounceWord(targetWord: number, duration: number): number {
+    const bounceDulation = 1000
+    setTimeout(() => {
+      base.words[targetWord].bounce = true
+      setTimeout(() => {
+        base.words[targetWord].bounce = false
+      }, bounceDulation)
+    }, duration)
+    return duration + bounceDulation
   }
 
   function reset() {
@@ -93,7 +106,8 @@ function initialAnser(wordLength: number): Answer {
         unused: index >= wordLength,
         result: []
       })),
-      shake: false
+      shake: false,
+      bounce: false
     }))
   }
 }
@@ -123,7 +137,8 @@ function wordFrom(text: string, wordLength: number): Word {
       unused: index >= wordLength,
       result: []
     })),
-    shake: false
+    shake: false,
+    bounce: false
   }
 }
 
