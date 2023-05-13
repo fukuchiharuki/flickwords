@@ -13,12 +13,10 @@ export type Answer = {
   words: Word[]
 }
 
-export type Score = {}
-
 export type Status = {
   duration: number
   gameOver: boolean
-  score: Score
+  answer: Answer
 }
 
 export default function useGameBoard(
@@ -59,7 +57,7 @@ export default function useGameBoard(
     return {
       duration,
       gameOver: gameClear || gameOver,
-      score: {}
+      answer: base
     }
   }
 
