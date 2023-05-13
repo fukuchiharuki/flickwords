@@ -1,8 +1,8 @@
 <template>
   <div class="display">
-    <div class="title">
+    <h1 class="title">
       jWORDLE <sup><i>FLICK</i></sup>
-    </div>
+    </h1>
     <div class="container">
       <GameBoard :answer="answer" />
     </div>
@@ -26,7 +26,8 @@
   }
 
   .title {
-    padding: 8px 0;
+    margin: 0;
+    padding: 8px 0 8px 36px;
     border-bottom: 1px solid lightgray;
     text-align: center;
     font-size: large;
