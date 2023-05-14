@@ -1,23 +1,17 @@
 <template>
   <div class="app">
-    <VirtualConsole>
-      <template #display>
-        <VirtualDisplay :answer="answer" />
-      </template>
-      <template #keyboard>
-        <VirtualKeyboard @input="onInput" />
-      </template>
-    </VirtualConsole>
+    <AppMain
+      v-if="dictionary.length"
+      :word-length="wordLength"
+      :dictionary="dictionary"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-  const { text, input, backspace } = useTextEdit(5)
-  const { answer } = useGameBoard(text)
+  import 'animate.css'
 
-  function onInput(args: { type: string; value: string }) {
-    const { type, value } = args
-    if (type === 'kana') input(value)
-    if (type === 'func' && value === 'backspace') backspace()
-  }
+  const wordLength = 5
+  const { data } = await useDictionary(wordLength)
+  const dictionary = computed(() => data.value || [])
 </script>
