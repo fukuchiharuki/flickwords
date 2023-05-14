@@ -1,4 +1,4 @@
-import { Status } from './useGameBoard'
+import { Answer, Status } from './useGameBoard'
 import { consonantMap, regulationMap, vowelMap } from '~/consts/charMap'
 
 export default function useGameMaster(
@@ -6,7 +6,8 @@ export default function useGameMaster(
   dictionary: Ref<string[]>,
   text: Ref<string>,
   shake: () => void,
-  compare: (results: string[][]) => Status
+  compare: (results: string[][]) => Status,
+  score: (answer: Answer) => void
 ): {
   keyLock: Ref<boolean>
   enter: () => void
@@ -28,7 +29,10 @@ export default function useGameMaster(
     const status = compare(results(text.value, correct.value))
     setTimeout(() => {
       if (!status.gameOver) keyLock.value = false
-      if (status.gameOver) alert('GAME OVER')
+      if (status.gameOver)
+        setTimeout(() => {
+          score(status.answer)
+        }, 1000)
     }, status.duration)
   }
 }

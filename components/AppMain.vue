@@ -19,12 +19,14 @@ import useGameMaster from '../composables/useGameMaster';
   const { wordLength, dictionary } = toRefs(props)
   const { text, input, backspace } = useTextEdit(wordLength)
   const { answer, shake, compare } = useGameBoard(wordLength, text)
+  const { score } = useGameScorer()
   const { keyLock, enter } = useGameMaster(
     wordLength,
     dictionary,
     text,
     shake,
-    compare
+    compare,
+    score
   )
 
   function onInput(args: { type: string; value: string }) {
