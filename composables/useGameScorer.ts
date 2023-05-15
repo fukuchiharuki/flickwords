@@ -1,18 +1,23 @@
 import { Answer } from './useGameBoard'
+import { getScore, saveScore, updateScore } from '~/repositories/Score'
 
 export default function useGameScorer(): {
-  score: (answer: Answer) => void
+  score: (wordLength: number, seeds: number[], answer: Answer) => void
 } {
   return {
     score
   }
 
-  function score(answer: Answer) {
+  function score(wordLength: number, seeds: number[], answer: Answer) {
     const correctedRound = correctedRoundOf(answer)
+    const score = getScore(wordLength)
+    const updatedScore = updateScore(score, correctedRound, seeds)
+    saveScore(wordLength, updatedScore)
     const emojiTiles = correctedRound
       ? emojiTilesOf(answer).slice(0, correctedRound)
       : emojiTilesOf(answer)
-    console.log('GAME OVER', correctedRound, emojiTiles)
+    console.log('GAME OVER', wordLength, correctedRound, emojiTiles)
+    console.log(updatedScore)
   }
 }
 

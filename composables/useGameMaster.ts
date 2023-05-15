@@ -7,13 +7,14 @@ export default function useGameMaster(
   text: Ref<string>,
   shake: () => void,
   compare: (results: string[][]) => Status,
-  score: (answer: Answer) => void
+  score: (wordLength: number, seeds: number[], answer: Answer) => void
 ): {
   keyLock: Ref<boolean>
   enter: () => void
 } {
   const keyLock = ref(false)
   const seed = ref(generateSeed())
+  const previousSeed = computed(() => previousSeedOf(seed.value))
   const correct = ref(correctOf(dictionary.value, randomFrom(seed.value)))
 
   return {
@@ -32,7 +33,11 @@ export default function useGameMaster(
       if (!status.gameOver) keyLock.value = false
       if (status.gameOver)
         setTimeout(() => {
-          score(status.answer)
+          score(
+            wordLength.value,
+            [seed.value, previousSeed.value],
+            status.answer
+          )
         }, 1000)
     }, status.duration)
   }
@@ -42,6 +47,10 @@ function generateSeed(): number {
   const date = new Date()
   const timestamp = date.getTime()
   return timestamp - (timestamp % 86400000) + date.getTimezoneOffset() * 60000
+}
+
+function previousSeedOf(seed: number): number {
+  return seed - 86400000
 }
 
 function randomFrom(seed: number): number {
