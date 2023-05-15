@@ -13,7 +13,8 @@ export default function useGameMaster(
   enter: () => void
 } {
   const keyLock = ref(false)
-  const correct = ref(correctOf(dictionary.value, rand(seed())))
+  const seed = ref(generateSeed())
+  const correct = ref(correctOf(dictionary.value, randomFrom(seed.value)))
 
   return {
     keyLock,
@@ -37,16 +38,19 @@ export default function useGameMaster(
   }
 }
 
-function seed(): string {
-  const dt = new Date()
+function generateSeed(): number {
+  const date = new Date()
+  const timestamp = date.getTime()
+  return timestamp - (timestamp % 86400000) + date.getTimezoneOffset() * 60000
+}
+
+function randomFrom(seed: number): number {
+  const dt = new Date(seed)
   const yyyy = dt.getFullYear()
   const MM = ('00' + (dt.getMonth() + 1)).slice(-2)
   const dd = ('00' + dt.getDate()).slice(-2)
-  return (yyyy + MM + dd).slice(-6)
-}
-
-function rand(seed: string): number {
-  const rand = [...seed].reverse().join('')
+  const yyMMdd = (yyyy + MM + dd).slice(-6)
+  const rand = [...yyMMdd].reverse().join('')
   return Number(rand)
 }
 
