@@ -27,7 +27,7 @@ export default function useGameBoard(
   answer: ComputedRef<Answer>
   shake: () => void
   compare: (results: string[][]) => Status
-  reset: () => void
+  reset: (answer?: Answer | null) => void
 } {
   const base = reactive(initialAnser(wordLength.value))
   const cursor = ref(0)
@@ -91,10 +91,14 @@ export default function useGameBoard(
     return duration + bounceDulation
   }
 
-  function reset() {
+  function reset(answer?: Answer | null) {
     text.value = ''
-    base.words = initialAnser(wordLength.value).words
-    cursor.value = 0
+    base.words = answer ? answer.words : initialAnser(wordLength.value).words
+    cursor.value = answer
+      ? answer.words
+          .map((w) => w.chars.map((c) => c.value).join(''))
+          .reduce((acc, word, index) => (word.length ? index + 1 : acc), 0)
+      : 0
   }
 }
 

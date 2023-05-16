@@ -1,4 +1,5 @@
 import { Answer, Status } from './useGameBoard'
+import { getAnswerBackup, saveAnswerBackup } from '~/repositories/Answer'
 import { consonantMap, regulationMap, vowelMap } from '~/consts/charMap'
 
 export default function useGameMaster(
@@ -7,6 +8,8 @@ export default function useGameMaster(
   text: Ref<string>,
   shake: () => void,
   compare: (results: string[][]) => Status,
+  reset: (answer?: Answer | null) => void,
+  firstGame: (wordLength: number, seed: number) => boolean,
   score: (wordLength: number, seeds: number[], answer: Answer) => void
 ): {
   keyLock: Ref<boolean>
@@ -17,9 +20,25 @@ export default function useGameMaster(
   const previousSeed = computed(() => previousSeedOf(seed.value))
   const correct = ref(correctOf(dictionary.value, randomFrom(seed.value)))
 
+  restore()
+  validateStart()
+
   return {
     keyLock,
     enter
+  }
+
+  function restore() {
+    const answerBackup = getAnswerBackup(seed.value)
+    reset(answerBackup)
+  }
+
+  function validateStart() {
+    // TODO: AnswerBackupから判断できないか？
+    if (!firstGame(wordLength.value, seed.value)) {
+      keyLock.value = true
+      // TODO: スコア表示
+    }
   }
 
   function enter() {
@@ -27,9 +46,11 @@ export default function useGameMaster(
       shake()
       return
     }
+
     keyLock.value = true
     const status = compare(results(text.value, correct.value))
     setTimeout(() => {
+      saveAnswerBackup(seed.value, status.answer)
       if (!status.gameOver) keyLock.value = false
       if (status.gameOver)
         setTimeout(() => {
