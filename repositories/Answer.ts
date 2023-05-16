@@ -28,6 +28,25 @@ export function initialAnser(wordLength: number): Answer {
   }
 }
 
+export function nextCursor(answer: Answer): number {
+  return answer.words
+    .map((w) => w.chars.map((c) => c.value).join(''))
+    .reduce((acc, word, index) => (word.length ? index + 1 : acc), 0)
+}
+
+export function outOfRange(cursor: number, answer: Answer): boolean {
+  return !(cursor < answer.words.length)
+}
+
+export function finished(answer: Answer): boolean {
+  const cursor = nextCursor(answer)
+  if (outOfRange(cursor, answer)) return true
+  return answer.words[cursor].chars
+    .map((c) => c.result)
+    .flat()
+    .reduce((acc, result) => acc && result === 'correct', true)
+}
+
 type AnswerBackup = {
   [key: number]: Answer
 }

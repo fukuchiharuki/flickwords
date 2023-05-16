@@ -1,6 +1,7 @@
 import { Status } from './useGameBoard'
 import {
   Answer,
+  finished,
   getAnswerBackup,
   saveAnswerBackup
 } from '~/repositories/Answer'
@@ -13,7 +14,6 @@ export default function useGameMaster(
   shake: () => void,
   compare: (results: string[][]) => Status,
   reset: (answer?: Answer | null) => void,
-  firstGame: (wordLength: number, seed: number) => boolean,
   score: (wordLength: number, seeds: number[], answer: Answer) => void
 ): {
   keyLock: Ref<boolean>
@@ -24,22 +24,22 @@ export default function useGameMaster(
   const previousSeed = computed(() => previousSeedOf(seed.value))
   const correct = ref(correctOf(dictionary.value, randomFrom(seed.value)))
 
-  restore()
-  validateStart()
+  validateStart(restore())
 
   return {
     keyLock,
     enter
   }
 
-  function restore() {
-    const answerBackup = getAnswerBackup(seed.value)
-    reset(answerBackup)
+  function restore(): Answer | null {
+    const answer = getAnswerBackup(seed.value)
+    reset(answer)
+    return answer
   }
 
-  function validateStart() {
-    // TODO: AnswerBackupから判断できないか？
-    if (!firstGame(wordLength.value, seed.value)) {
+  function validateStart(answer: Answer | null) {
+    if (!answer) return
+    if (finished(answer)) {
       keyLock.value = true
       // TODO: スコア表示
     }

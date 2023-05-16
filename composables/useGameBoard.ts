@@ -1,4 +1,10 @@
-import { Answer, Word, initialAnser } from '~/repositories/Answer'
+import {
+  Answer,
+  Word,
+  nextCursor,
+  initialAnser,
+  outOfRange
+} from '~/repositories/Answer'
 
 export type Status = {
   duration: number
@@ -80,11 +86,7 @@ export default function useGameBoard(
   function reset(answer?: Answer | null) {
     text.value = ''
     base.words = answer ? answer.words : initialAnser(wordLength.value).words
-    cursor.value = answer
-      ? answer.words
-          .map((w) => w.chars.map((c) => c.value).join(''))
-          .reduce((acc, word, index) => (word.length ? index + 1 : acc), 0)
-      : 0
+    cursor.value = answer ? nextCursor(answer) : 0
   }
 }
 
@@ -116,8 +118,4 @@ function wordFrom(text: string, wordLength: number): Word {
     shake: false,
     bounce: false
   }
-}
-
-function outOfRange(cursor: number, answer: Answer): boolean {
-  return !(cursor < answer.words.length)
 }

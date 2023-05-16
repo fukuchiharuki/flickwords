@@ -2,19 +2,10 @@ import { Answer } from '~/repositories/Answer'
 import { getScore, saveScore, updateScore } from '~/repositories/Score'
 
 export default function useGameScorer(): {
-  firstGame: (wordLength: number, seed: number) => boolean
   score: (wordLength: number, seeds: number[], answer: Answer) => void
 } {
   return {
-    firstGame,
     score
-  }
-
-  function firstGame(wordLength: number, seed: number): boolean {
-    const score = getScore(wordLength)
-    const firstGame = score.lastPlay !== seed
-    console.log('firstGame', firstGame)
-    return firstGame
   }
 
   function score(wordLength: number, seeds: number[], answer: Answer) {
