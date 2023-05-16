@@ -1,4 +1,4 @@
-import { Answer } from './useGameBoard'
+import { Answer } from '~/repositories/Answer'
 import { getScore, saveScore, updateScore } from '~/repositories/Score'
 
 export default function useGameScorer(): {

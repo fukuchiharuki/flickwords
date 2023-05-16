@@ -1,18 +1,4 @@
-export type Char = {
-  value: string
-  unused: boolean
-  result: string[]
-}
-
-export type Word = {
-  chars: Char[]
-  shake: boolean
-  bounce: boolean
-}
-
-export type Answer = {
-  words: Word[]
-}
+import { Answer, Word, initialAnser } from '~/repositories/Answer'
 
 export type Status = {
   duration: number
@@ -54,7 +40,7 @@ export default function useGameBoard(
     const gameClear = results
       .flat()
       .reduce((acc, result) => acc && result === 'correct', true)
-    const gameOver = outOfRange(cursor)
+    const gameOver = outOfRange(cursor.value, base)
     if (gameClear) duration = bounceWord(currentWord, duration)
     return {
       duration,
@@ -64,7 +50,7 @@ export default function useGameBoard(
   }
 
   function nextWord() {
-    if (!outOfRange(cursor))
+    if (!outOfRange(cursor.value, base))
       base.words[cursor.value] = wordFrom(text.value, wordLength.value)
     text.value = ''
     cursor.value = cursor.value + 1
@@ -102,20 +88,6 @@ export default function useGameBoard(
   }
 }
 
-function initialAnser(wordLength: number): Answer {
-  return {
-    words: [...Array(6)].map((_) => ({
-      chars: [...Array(5)].map((_, index) => ({
-        value: '',
-        unused: index >= wordLength,
-        result: []
-      })),
-      shake: false,
-      bounce: false
-    }))
-  }
-}
-
 function computedAnswer(
   base: Answer,
   cursor: Ref<number>,
@@ -124,7 +96,7 @@ function computedAnswer(
   wordLength: Ref<number>
 ): ComputedRef<Answer> {
   return computed<Answer>(() => {
-    if (outOfRange(cursor)) return base
+    if (outOfRange(cursor.value, base)) return base
     const words = [...base.words] as Word[]
     words[cursor.value] = {
       ...wordFrom(text.value, wordLength.value),
@@ -146,6 +118,6 @@ function wordFrom(text: string, wordLength: number): Word {
   }
 }
 
-function outOfRange(cursor: Ref<number>): boolean {
-  return cursor.value >= 6
+function outOfRange(cursor: number, answer: Answer): boolean {
+  return !(cursor < answer.words.length)
 }

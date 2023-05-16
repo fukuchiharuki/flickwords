@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-  import { Answer } from '../composables/useGameBoard'
+  import { Answer } from '~/repositories/Answer'
 
   defineProps<{
     answer: Answer

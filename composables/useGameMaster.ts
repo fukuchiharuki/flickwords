@@ -1,5 +1,9 @@
-import { Answer, Status } from './useGameBoard'
-import { getAnswerBackup, saveAnswerBackup } from '~/repositories/Answer'
+import { Status } from './useGameBoard'
+import {
+  Answer,
+  getAnswerBackup,
+  saveAnswerBackup
+} from '~/repositories/Answer'
 import { consonantMap, regulationMap, vowelMap } from '~/consts/charMap'
 
 export default function useGameMaster(

@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-  import { Char } from '../composables/useGameBoard'
+  import { Char } from '~/repositories/Answer'
 
   defineProps<{
     char: Char
