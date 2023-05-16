@@ -32,7 +32,7 @@ export default function useGameMaster(
   }
 
   function restore(): Answer | null {
-    const answer = getAnswerBackup(seed.value)
+    const answer = getAnswerBackup(wordLength.value, seed.value)
     reset(answer)
     return answer
   }
@@ -40,6 +40,7 @@ export default function useGameMaster(
   function validateStart(answer: Answer | null) {
     if (!answer) return
     if (finished(answer)) {
+      console.log('key locked')
       keyLock.value = true
       // TODO: スコア表示
     }
@@ -54,7 +55,7 @@ export default function useGameMaster(
     keyLock.value = true
     const status = compare(results(text.value, correct.value))
     setTimeout(() => {
-      saveAnswerBackup(seed.value, status.answer)
+      saveAnswerBackup(wordLength.value, seed.value, status.answer)
       if (!status.gameOver) keyLock.value = false
       if (status.gameOver)
         setTimeout(() => {
@@ -97,7 +98,7 @@ function results(text: string, correct: string): string[][] {
   const textChars = [...text]
   const correctChars = [...correct]
   return textChars.map((char, index) => {
-    if (regulated(char) === correctChars[index]) return ['correct']
+    if (regulated(char) === regulated(correctChars[index])) return ['correct']
     return [
       vowel(char) === vowel(correctChars[index]) ? 'vowel' : null,
       consonant(char) === consonant(correctChars[index]) ? 'consonant' : null,

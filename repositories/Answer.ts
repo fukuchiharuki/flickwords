@@ -30,7 +30,12 @@ export function initialAnser(wordLength: number): Answer {
 
 export function nextCursor(answer: Answer): number {
   return answer.words
-    .map((w) => w.chars.map((c) => c.value).join(''))
+    .map((w) =>
+      w.chars
+        .filter((c) => !c.unused)
+        .map((c) => c.value)
+        .join('')
+    )
     .reduce((acc, word, index) => (word.length ? index + 1 : acc), 0)
 }
 
@@ -41,7 +46,8 @@ export function outOfRange(cursor: number, answer: Answer): boolean {
 export function finished(answer: Answer): boolean {
   const cursor = nextCursor(answer)
   if (outOfRange(cursor, answer)) return true
-  return answer.words[cursor].chars
+  return answer.words[cursor - 1].chars
+    .filter((c) => !c.unused)
     .map((c) => c.result)
     .flat()
     .reduce((acc, result) => acc && result === 'correct', true)
@@ -51,16 +57,23 @@ type AnswerBackup = {
   [key: number]: Answer
 }
 
-export function getAnswerBackup(seed: number): Answer | null {
-  const data = localStorage.getItem(key())
+export function getAnswerBackup(
+  wordLength: number,
+  seed: number
+): Answer | null {
+  const data = localStorage.getItem(keyOf(wordLength))
   return data ? (JSON.parse(data) as AnswerBackup)[seed] || null : null
 }
 
-export function saveAnswerBackup(seed: number, answer: Answer) {
+export function saveAnswerBackup(
+  wordLength: number,
+  seed: number,
+  answer: Answer
+) {
   const data = JSON.stringify({ [seed]: answer } as AnswerBackup)
-  localStorage.setItem(key(), data)
+  localStorage.setItem(keyOf(wordLength), data)
 }
 
-function key(): string {
-  return `answer`
+function keyOf(wordLength: number): string {
+  return `answer.${wordLength}`
 }
