@@ -136,6 +136,11 @@ export const vowelMap = {
   や: 'あ',
   ゆ: 'う',
   よ: 'お',
+  ら: 'あ',
+  り: 'い',
+  る: 'う',
+  れ: 'え',
+  ろ: 'お',
   わ: 'あ',
   を: 'お'
 } as { [key: string]: string }
@@ -171,5 +176,9 @@ export const consonantMap = {
   も: 'ま',
   ゆ: 'や',
   よ: 'や',
+  り: 'ら',
+  る: 'ら',
+  れ: 'ら',
+  ろ: 'ら',
   を: 'わ'
 } as { [key: string]: string }
