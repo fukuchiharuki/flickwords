@@ -22,8 +22,8 @@ export default function useGameMaster(
   enter: () => void
 } {
   const keyLock = ref(false)
-  const seed = ref(generateSeed())
-  const correct = ref(correctOf(dictionary.value, randomFrom(seed.value[0])))
+  const seed = ref([] as number[])
+  const correct = ref('')
 
   restart() // start
 
@@ -34,6 +34,9 @@ export default function useGameMaster(
   }
 
   function restart() {
+    keyLock.value = false
+    seed.value = generateSeed()
+    correct.value = correctOf(dictionary.value, randomFrom(seed.value[0]))
     validateStart(restore())
   }
 
@@ -80,7 +83,8 @@ function generateSeed(): number[] {
 }
 
 function interval(): number {
-  return 86400000 // 24 hours: 1000 * 60 * 60 * 24
+  // return 86400000 // 24 hours: 1000 * 60 * 60 * 24
+  return 1000 * 60
 }
 
 function currentSeed(): number {
