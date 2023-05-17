@@ -4,7 +4,7 @@ import Score, { getScore, saveScore, updateScore } from '~/repositories/Score'
 export default function useGameScorer(): {
   resultOnDisplay: Ref<boolean>
   result: Ref<{ score: Score; emojiTiles: string[] }>
-  keepScore: (wordLength: number, seeds: number[], answer: Answer) => void
+  keepScore: (wordLength: number, seed: number[], answer: Answer) => void
   restoreScore: (wordLength: number, answer: Answer) => void
 } {
   const resultOnDisplay = ref(false)
@@ -17,10 +17,10 @@ export default function useGameScorer(): {
     restoreScore
   }
 
-  function keepScore(wordLength: number, seeds: number[], answer: Answer) {
+  function keepScore(wordLength: number, seed: number[], answer: Answer) {
     const resultRound = resultRoundOf(answer)
     const score = getScore(wordLength)
-    const updatedScore = updateScore(score, resultRound, seeds)
+    const updatedScore = updateScore(score, resultRound, seed)
     saveScore(wordLength, updatedScore)
     const emojiTiles = resultRound
       ? emojiTilesOf(answer).slice(0, resultRound)

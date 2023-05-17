@@ -45,20 +45,20 @@ export function guessDistributionOf(score: Score): GuessDistribution[] {
 export function updateScore(
   score: Score,
   resultRound: number,
-  seeds: number[]
+  seed: number[]
 ): Score {
-  if (score.lastPlay === seeds[0]) return score
+  if (score.lastPlay === seed[0]) return score
   const records = [...score.records]
   records[resultRound] = records[resultRound] + 1
   const win = resultRound > 0 ? 1 : 0
-  const continuousWin = win && score.lastWin === seeds[1]
+  const continuousWin = win && score.lastWin === seed[1]
   const currentStreak = win + (continuousWin ? score.currentStreak : 0)
   return {
     records,
     currentStreak,
     maxStreak: Math.max(currentStreak, score.maxStreak),
-    lastPlay: seeds[0],
-    lastWin: win ? seeds[0] : score.lastWin,
+    lastPlay: seed[0],
+    lastWin: win ? seed[0] : score.lastWin,
     resultRound
   }
 }

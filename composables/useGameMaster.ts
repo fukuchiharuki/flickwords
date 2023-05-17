@@ -14,7 +14,7 @@ export default function useGameMaster(
   shake: () => void,
   compare: (results: string[][]) => Status,
   reset: (answer?: Answer) => void,
-  keepScore: (wordLength: number, seeds: number[], answer: Answer) => void,
+  keepScore: (wordLength: number, seed: number[], answer: Answer) => void,
   restoreScore: (wordLength: number, answer: Answer) => void
 ): {
   keyLock: Ref<boolean>
@@ -23,8 +23,7 @@ export default function useGameMaster(
 } {
   const keyLock = ref(false)
   const seed = ref(generateSeed())
-  const previousSeed = computed(() => previousSeedOf(seed.value))
-  const correct = ref(correctOf(dictionary.value, randomFrom(seed.value)))
+  const correct = ref(correctOf(dictionary.value, randomFrom(seed.value[0])))
 
   restart() // start
 
@@ -39,7 +38,7 @@ export default function useGameMaster(
   }
 
   function restore(): Answer | null {
-    const answer = getAnswerBackup(wordLength.value, seed.value)
+    const answer = getAnswerBackup(wordLength.value, seed.value[0])
     answer && reset(answer)
     return answer
   }
@@ -64,28 +63,30 @@ export default function useGameMaster(
     keyLock.value = true
     const status = compare(results(text.value, correct.value))
     setTimeout(() => {
-      saveAnswerBackup(wordLength.value, seed.value, status.answer)
+      saveAnswerBackup(wordLength.value, seed.value[0], status.answer)
       if (!status.gameOver) keyLock.value = false
       if (status.gameOver)
         setTimeout(() => {
-          keepScore(
-            wordLength.value,
-            [seed.value, previousSeed.value],
-            status.answer
-          )
+          keepScore(wordLength.value, seed.value, status.answer)
         }, 1000)
     }, status.duration)
   }
 }
 
-function generateSeed(): number {
+function generateSeed(): number[] {
+  const current = currentSeed()
+  const previous = previousSeedOf(current)
+  return [current, previous]
+}
+
+function currentSeed(): number {
   const date = new Date()
   const timestamp = date.getTime()
   return timestamp - (timestamp % 86400000) + date.getTimezoneOffset() * 60000
 }
 
-function previousSeedOf(seed: number): number {
-  return seed - 86400000
+function previousSeedOf(currentSeed: number): number {
+  return currentSeed - 86400000
 }
 
 function randomFrom(seed: number): number {
