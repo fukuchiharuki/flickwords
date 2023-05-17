@@ -79,14 +79,18 @@ function generateSeed(): number[] {
   return [current, previous]
 }
 
+function interval(): number {
+  return 86400000 // 24 hours: 1000 * 60 * 60 * 24
+}
+
 function currentSeed(): number {
   const date = new Date()
   const timestamp = date.getTime()
-  return timestamp - (timestamp % 86400000) + date.getTimezoneOffset() * 60000
+  return timestamp - (timestamp % interval()) + date.getTimezoneOffset() * 60000
 }
 
 function previousSeedOf(currentSeed: number): number {
-  return currentSeed - 86400000
+  return currentSeed - interval()
 }
 
 function randomFrom(seed: number): number {
