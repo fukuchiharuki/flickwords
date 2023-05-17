@@ -24,7 +24,7 @@ import useGameMaster from '../composables/useGameMaster';
   const { wordLength, dictionary } = toRefs(props)
   const { text, input, backspace } = useTextEdit(wordLength)
   const { answer, shake, compare, reset } = useGameBoard(wordLength, text)
-  const { resultOnDisplay, result, keepScore } = useGameScorer()
+  const { resultOnDisplay, result, keepScore, restoreScore } = useGameScorer()
   const { keyLock, enter } = useGameMaster(
     wordLength,
     dictionary,
@@ -32,7 +32,8 @@ import useGameMaster from '../composables/useGameMaster';
     shake,
     compare,
     reset,
-    keepScore
+    keepScore,
+    restoreScore
   )
 
   function onInput(args: { type: string; value: string }) {

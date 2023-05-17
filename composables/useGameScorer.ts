@@ -5,6 +5,7 @@ export default function useGameScorer(): {
   resultOnDisplay: Ref<boolean>
   result: Ref<{ score: Score; emojiTiles: string[] }>
   keepScore: (wordLength: number, seeds: number[], answer: Answer) => void
+  restoreScore: (wordLength: number, answer: Answer) => void
 } {
   const resultOnDisplay = ref(false)
   const result = ref({ score: {} as Score, emojiTiles: [] as string[] })
@@ -12,7 +13,8 @@ export default function useGameScorer(): {
   return {
     resultOnDisplay,
     result,
-    keepScore
+    keepScore,
+    restoreScore
   }
 
   function keepScore(wordLength: number, seeds: number[], answer: Answer) {
@@ -26,6 +28,17 @@ export default function useGameScorer(): {
     show(updatedScore, emojiTiles)
     console.log('GAME OVER', wordLength, resultRound, emojiTiles)
     console.log(updatedScore)
+  }
+
+  function restoreScore(wordLength: number, answer: Answer) {
+    const resultRound = resultRoundOf(answer)
+    const score = getScore(wordLength)
+    const emojiTiles = resultRound
+      ? emojiTilesOf(answer).slice(0, resultRound)
+      : emojiTilesOf(answer)
+    show(score, emojiTiles)
+    console.log('GAME OVER', wordLength, resultRound, emojiTiles)
+    console.log(score)
   }
 
   function show(score: Score, emojiTiles: string[]) {

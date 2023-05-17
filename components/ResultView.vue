@@ -1,6 +1,6 @@
 <template>
   <div class="result animate__animated animate__fadeInUp">
-    <strong>STATISTICS (L:{{ wordLength }})</strong>
+    <strong>STATISTICS (L{{ wordLength }})</strong>
     <div class="statistics">
       <div class="item">
         <div class="value">{{ statistics.played }}</div>

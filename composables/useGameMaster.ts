@@ -13,10 +13,12 @@ export default function useGameMaster(
   text: Ref<string>,
   shake: () => void,
   compare: (results: string[][]) => Status,
-  reset: (answer?: Answer | null) => void,
-  keepScore: (wordLength: number, seeds: number[], answer: Answer) => void
+  reset: (answer?: Answer) => void,
+  keepScore: (wordLength: number, seeds: number[], answer: Answer) => void,
+  restoreScore: (wordLength: number, answer: Answer) => void
 ): {
   keyLock: Ref<boolean>
+  restart: () => void
   enter: () => void
 } {
   const keyLock = ref(false)
@@ -24,16 +26,21 @@ export default function useGameMaster(
   const previousSeed = computed(() => previousSeedOf(seed.value))
   const correct = ref(correctOf(dictionary.value, randomFrom(seed.value)))
 
-  validateStart(restore())
+  restart() // start
 
   return {
     keyLock,
+    restart,
     enter
+  }
+
+  function restart() {
+    validateStart(restore())
   }
 
   function restore(): Answer | null {
     const answer = getAnswerBackup(wordLength.value, seed.value)
-    reset(answer)
+    answer && reset(answer)
     return answer
   }
 
@@ -42,7 +49,9 @@ export default function useGameMaster(
     if (finished(answer)) {
       console.log('key locked')
       keyLock.value = true
-      // TODO: スコア表示
+      setTimeout(() => {
+        restoreScore(wordLength.value, answer)
+      }, 1500)
     }
   }
 
