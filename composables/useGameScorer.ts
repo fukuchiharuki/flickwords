@@ -16,15 +16,15 @@ export default function useGameScorer(): {
   }
 
   function keepScore(wordLength: number, seeds: number[], answer: Answer) {
-    const correctedRound = correctedRoundOf(answer)
+    const resultRound = resultRoundOf(answer)
     const score = getScore(wordLength)
-    const updatedScore = updateScore(score, correctedRound, seeds)
+    const updatedScore = updateScore(score, resultRound, seeds)
     saveScore(wordLength, updatedScore)
-    const emojiTiles = correctedRound
-      ? emojiTilesOf(answer).slice(0, correctedRound)
+    const emojiTiles = resultRound
+      ? emojiTilesOf(answer).slice(0, resultRound)
       : emojiTilesOf(answer)
     show(updatedScore, emojiTiles)
-    console.log('GAME OVER', wordLength, correctedRound, emojiTiles)
+    console.log('GAME OVER', wordLength, resultRound, emojiTiles)
     console.log(updatedScore)
   }
 
@@ -34,15 +34,15 @@ export default function useGameScorer(): {
   }
 }
 
-function correctedRoundOf(answer: Answer): number {
+function resultRoundOf(answer: Answer): number {
   return answer.words.reduce(
-    (correctedRound, word, index) =>
+    (resultRound, word, index) =>
       word.chars.reduce(
         (acc, char) => acc && char.result.includes('correct'),
         true
       )
         ? index + 1
-        : correctedRound,
+        : resultRound,
     0
   )
 }

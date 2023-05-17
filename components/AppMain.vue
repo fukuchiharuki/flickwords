@@ -8,7 +8,11 @@ import useGameMaster from '../composables/useGameMaster';
       <VirtualKeyboard @input="onInput" />
     </template>
   </VirtualConsole>
-  <ResultView v-if="resultOnDisplay" :result="result" />
+  <ResultView
+    v-if="resultOnDisplay"
+    :word-length="wordLength"
+    :result="result"
+  />
 </template>
 
 <script setup lang="ts">

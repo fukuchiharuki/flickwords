@@ -4,6 +4,7 @@ type Score = {
   maxStreak: number
   lastPlay: number
   lastWin: number
+  resultRound: number
 }
 
 type Statistics = {
@@ -11,6 +12,12 @@ type Statistics = {
   winAverage: number
   currentStreak: number
   maxStreak: number
+}
+
+type GuessDistribution = {
+  lastResult: boolean
+  count: number
+  ratio: number
 }
 
 export default Score
@@ -26,15 +33,24 @@ export function statisticsOf(score: Score): Statistics {
   }
 }
 
+export function guessDistributionOf(score: Score): GuessDistribution[] {
+  const played = score.records.reduce((acc, record) => acc + record, 0)
+  return score.records.map((record, index) => ({
+    lastResult: score.resultRound === index,
+    count: record,
+    ratio: Math.trunc((record / played) * 100)
+  }))
+}
+
 export function updateScore(
   score: Score,
-  correctedRound: number,
+  resultRound: number,
   seeds: number[]
 ): Score {
   if (score.lastPlay === seeds[0]) return score
   const records = [...score.records]
-  records[correctedRound] = records[correctedRound] + 1
-  const win = correctedRound > 0 ? 1 : 0
+  records[resultRound] = records[resultRound] + 1
+  const win = resultRound > 0 ? 1 : 0
   const continuousWin = win && score.lastWin === seeds[1]
   const currentStreak = win + (continuousWin ? score.currentStreak : 0)
   return {
@@ -42,7 +58,8 @@ export function updateScore(
     currentStreak,
     maxStreak: Math.max(currentStreak, score.maxStreak),
     lastPlay: seeds[0],
-    lastWin: win ? seeds[0] : score.lastWin
+    lastWin: win ? seeds[0] : score.lastWin,
+    resultRound
   }
 }
 
@@ -62,10 +79,11 @@ function keyOf(wordLength: number): string {
 
 function initialScore(): Score {
   return {
-    records: [0, 0, 0, 0, 0, 0],
+    records: [0, 0, 0, 0, 0, 0, 0],
     currentStreak: 0,
     maxStreak: 0,
     lastPlay: 0,
-    lastWin: 0
+    lastWin: 0,
+    resultRound: 0
   }
 }
