@@ -6,7 +6,25 @@ type Score = {
   lastWin: number
 }
 
+type Statistics = {
+  played: number
+  winAverage: number
+  currentStreak: number
+  maxStreak: number
+}
+
 export default Score
+
+export function statisticsOf(score: Score): Statistics {
+  const played = score.records.reduce((acc, record) => acc + record, 0)
+  const win = score.records.slice(1).reduce((acc, record) => acc + record, 0)
+  return {
+    played,
+    winAverage: Math.trunc((win / played) * 100),
+    currentStreak: score.currentStreak,
+    maxStreak: score.maxStreak
+  }
+}
 
 export function updateScore(
   score: Score,

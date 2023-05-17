@@ -3,19 +3,19 @@
     <strong>STATISTICS</strong>
     <div class="statistics">
       <div class="item">
-        <div class="value">100</div>
+        <div class="value">{{ statistics.played }}</div>
         <div class="name">Played</div>
       </div>
       <div class="item">
-        <div class="value">100</div>
+        <div class="value">{{ statistics.winAverage }}</div>
         <div class="name">Win %</div>
       </div>
       <div class="item">
-        <div class="value">{{ result.score.currentStreak }}</div>
+        <div class="value">{{ statistics.currentStreak }}</div>
         <div class="name">Current Streak</div>
       </div>
       <div class="item">
-        <div class="value">{{ result.score.maxStreak }}</div>
+        <div class="value">{{ statistics.maxStreak }}</div>
         <div class="name">Max Streak</div>
       </div>
     </div>
@@ -23,11 +23,13 @@
 </template>
 
 <script setup lang="ts">
-  import Score from '~/repositories/Score'
+  import Score, { statisticsOf } from '../repositories/Score'
 
-  defineProps<{
+  const props = defineProps<{
     result: { score: Score; emojiTiles: string[] }
   }>()
+
+  const statistics = computed(() => statisticsOf(props.result.score))
 </script>
 
 <style lang="scss" scoped>
