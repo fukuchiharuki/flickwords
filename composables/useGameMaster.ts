@@ -13,27 +13,25 @@ export default function useGameMaster(
   text: Ref<string>,
   shake: () => void,
   compare: (results: string[][]) => Status,
-  reset: (answer?: Answer) => void,
+  reset: (answer: Answer | null) => void,
   keepScore: (wordLength: number, seed: number[], answer: Answer) => void,
   restoreScore: (wordLength: number, answer: Answer) => void
 ): {
   keyLock: Ref<boolean>
-  restart: () => void
   enter: () => void
 } {
   const keyLock = ref(false)
   const seed = ref([] as number[])
   const correctWord = ref('')
 
-  restart() // start
+  initialize()
 
   return {
     keyLock,
-    restart,
     enter
   }
 
-  function restart() {
+  function initialize() {
     keyLock.value = false
     seed.value = generateSeed()
     correctWord.value = correctWordOf(
@@ -45,7 +43,7 @@ export default function useGameMaster(
 
   function restore(): Answer | null {
     const answer = getAnswerBackup(wordLength.value, seed.value[0])
-    answer && reset(answer)
+    reset(answer)
     return answer
   }
 

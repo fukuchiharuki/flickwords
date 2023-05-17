@@ -17,6 +17,7 @@ import useGameMaster from '../composables/useGameMaster';
   <MenuView
     v-if="menuOnDisplay"
     :word-length="wordLength"
+    @switch="$emit('switch', $event)"
     @close="menuOnDisplay = false"
   />
 </template>
@@ -25,6 +26,10 @@ import useGameMaster from '../composables/useGameMaster';
   const props = defineProps<{
     wordLength: number
     dictionary: string[]
+  }>()
+
+  defineEmits<{
+    (e: 'switch', wordLength: number): void
   }>()
 
   const { wordLength, dictionary } = toRefs(props)

@@ -3,17 +3,17 @@
     <strong class="title">FLICKWORDS</strong>
     <strong>MORE GAMES</strong>
     <ul>
-      <li>
+      <li @click="$emit('switch', wordLength)">
         <span class="icon">☕️</span>Next Game
         <span class="note">(One game a day)</span>
       </li>
-      <li v-if="wordLength !== 3">
+      <li v-if="wordLength !== 3" @click="$emit('switch', 3)">
         <span class="icon">☘️</span>3 Letter Words
       </li>
-      <li v-if="wordLength !== 4">
+      <li v-if="wordLength !== 4" @click="$emit('switch', 4)">
         <span class="icon">🍀</span>4 Letter Words
       </li>
-      <li v-if="wordLength !== 5">
+      <li v-if="wordLength !== 5" @click="$emit('switch', 5)">
         <span class="icon">🌸</span>5 Letter Words
       </li>
     </ul>
@@ -27,6 +27,7 @@
   }>()
 
   defineEmits<{
+    (e: 'switch', wordLength: number): void
     (e: 'close'): void
   }>()
 </script>
