@@ -12,6 +12,7 @@ import useGameMaster from '../composables/useGameMaster';
     v-if="resultOnDisplay"
     :word-length="wordLength"
     :result="result"
+    @close="resultOnDisplay = false"
   />
 </template>
 

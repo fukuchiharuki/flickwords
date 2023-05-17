@@ -36,6 +36,7 @@
         </div>
       </div>
     </div>
+    <div class="close" @click="$emit('close')">✕️</div>
   </div>
 </template>
 
@@ -48,6 +49,10 @@
   const props = defineProps<{
     wordLength: number
     result: { score: Score; emojiTiles: string[] }
+  }>()
+
+  defineEmits<{
+    (e: 'close'): void
   }>()
 
   const statistics = computed(() => statisticsOf(props.result.score))
@@ -73,10 +78,16 @@
     &.animate__fadeInUp {
       --animate-duration: 0.4s;
     }
-  }
 
-  strong {
-    font-size: small;
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    strong {
+      font-size: small;
+    }
   }
 
   .statistics {
