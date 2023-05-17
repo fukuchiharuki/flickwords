@@ -14,6 +14,11 @@ import useGameMaster from '../composables/useGameMaster';
     :result="result"
     @close="resultOnDisplay = false"
   />
+  <MenuView
+    v-if="menuOnDisplay"
+    :word-length="wordLength"
+    @close="menuOnDisplay = false"
+  />
 </template>
 
 <script setup lang="ts">
@@ -37,10 +42,15 @@ import useGameMaster from '../composables/useGameMaster';
     restoreScore
   )
 
+  const menuOnDisplay = ref(false)
+
   function onInput(args: { type: string; value: string }) {
     const { type, value } = args
     if (type === 'kana') !keyLock.value && input(value)
     if (type === 'func' && value === 'backspace') !keyLock.value && backspace()
     if (type === 'func' && value === 'enter') !keyLock.value && enter()
+    if (type === 'func' && value === 'menu') {
+      menuOnDisplay.value = true
+    }
   }
 </script>

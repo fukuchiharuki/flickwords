@@ -86,6 +86,7 @@
     }
 
     strong {
+      display: block;
       font-size: small;
     }
   }
