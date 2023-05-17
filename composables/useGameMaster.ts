@@ -23,7 +23,7 @@ export default function useGameMaster(
 } {
   const keyLock = ref(false)
   const seed = ref([] as number[])
-  const correct = ref('')
+  const correctWord = ref('')
 
   restart() // start
 
@@ -36,7 +36,10 @@ export default function useGameMaster(
   function restart() {
     keyLock.value = false
     seed.value = generateSeed()
-    correct.value = correctOf(dictionary.value, randomFrom(seed.value[0]))
+    correctWord.value = correctWordOf(
+      dictionary.value,
+      randomFrom(seed.value[0])
+    )
     validateStart(restore())
   }
 
@@ -64,7 +67,7 @@ export default function useGameMaster(
     }
 
     keyLock.value = true
-    const status = compare(results(text.value, correct.value))
+    const status = compare(results(text.value, correctWord.value))
     setTimeout(() => {
       saveAnswerBackup(wordLength.value, seed.value[0], status.answer)
       if (!status.gameOver) keyLock.value = false
@@ -107,14 +110,14 @@ function randomFrom(seed: number): number {
   return Number(rand)
 }
 
-function correctOf(dictionary: string[], rand: number): string {
+function correctWordOf(dictionary: string[], rand: number): string {
   console.log(rand % dictionary.length, dictionary[rand % dictionary.length])
   return dictionary[rand % dictionary.length]
 }
 
-function results(text: string, correct: string): string[][] {
+function results(text: string, correctWord: string): string[][] {
   const textChars = [...text]
-  const correctChars = [...correct]
+  const correctChars = [...correctWord]
   return textChars.map((char, index) => {
     if (regulated(char) === regulated(correctChars[index])) return ['correct']
     return [
