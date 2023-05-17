@@ -14,7 +14,7 @@ export default function useGameMaster(
   shake: () => void,
   compare: (results: string[][]) => Status,
   reset: (answer?: Answer | null) => void,
-  score: (wordLength: number, seeds: number[], answer: Answer) => void
+  keepScore: (wordLength: number, seeds: number[], answer: Answer) => void
 ): {
   keyLock: Ref<boolean>
   enter: () => void
@@ -59,7 +59,7 @@ export default function useGameMaster(
       if (!status.gameOver) keyLock.value = false
       if (status.gameOver)
         setTimeout(() => {
-          score(
+          keepScore(
             wordLength.value,
             [seed.value, previousSeed.value],
             status.answer

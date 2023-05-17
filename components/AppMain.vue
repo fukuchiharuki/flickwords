@@ -8,6 +8,7 @@ import useGameMaster from '../composables/useGameMaster';
       <VirtualKeyboard @input="onInput" />
     </template>
   </VirtualConsole>
+  <ResultView v-if="resultOnDisplay" :result="result" />
 </template>
 
 <script setup lang="ts">
@@ -19,7 +20,7 @@ import useGameMaster from '../composables/useGameMaster';
   const { wordLength, dictionary } = toRefs(props)
   const { text, input, backspace } = useTextEdit(wordLength)
   const { answer, shake, compare, reset } = useGameBoard(wordLength, text)
-  const { score } = useGameScorer()
+  const { resultOnDisplay, result, keepScore } = useGameScorer()
   const { keyLock, enter } = useGameMaster(
     wordLength,
     dictionary,
@@ -27,7 +28,7 @@ import useGameMaster from '../composables/useGameMaster';
     shake,
     compare,
     reset,
-    score
+    keepScore
   )
 
   function onInput(args: { type: string; value: string }) {
