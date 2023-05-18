@@ -50,10 +50,9 @@ export default function useGameScorer(): {
 function resultRoundOf(answer: Answer): number {
   return answer.words.reduce(
     (resultRound, word, index) =>
-      word.chars.reduce(
-        (acc, char) => acc && char.result.includes('correct'),
-        true
-      )
+      word.chars
+        .filter((c) => !c.unused)
+        .reduce((acc, char) => acc && char.result.includes('correct'), true)
         ? index + 1
         : resultRound,
     0

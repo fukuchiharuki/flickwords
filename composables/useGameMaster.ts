@@ -114,14 +114,14 @@ function correctWordOf(dictionary: string[], rand: number): string {
 }
 
 function results(text: string, correctWord: string): string[][] {
-  const textChars = [...text]
-  const correctChars = [...correctWord]
+  const textChars = [...text].map((c) => regulated(c))
+  const correctChars = [...correctWord].map((c) => regulated(c))
   return textChars.map((char, index) => {
-    if (regulated(char) === regulated(correctChars[index])) return ['correct']
+    if (char === correctChars[index]) return ['correct']
     return [
       vowel(char) === vowel(correctChars[index]) ? 'vowel' : null,
       consonant(char) === consonant(correctChars[index]) ? 'consonant' : null,
-      correctChars.includes(regulated(char)) ? 'present' : 'absent'
+      correctChars.includes(char) ? 'present' : 'absent'
     ].filter((it) => it) as string[]
   })
 }
@@ -130,10 +130,10 @@ function regulated(char: string) {
   return regulationMap[char] || char
 }
 
-function vowel(char: string) {
-  return vowelMap[regulated(char)] || char
+function vowel(regulatedChar: string) {
+  return vowelMap[regulatedChar] || regulatedChar
 }
 
-function consonant(char: string) {
-  return consonantMap[regulated(char)] || char
+function consonant(regulatedChar: string) {
+  return consonantMap[regulatedChar] || regulatedChar
 }
