@@ -4,7 +4,7 @@
     <strong>MORE GAMES</strong>
     <ul>
       <li @click="$emit('switch', wordLength)">
-        <span class="icon">☕️</span>Next Game
+        <span class="icon">☕️</span>New Game
         <span class="note">(One game a day)</span>
       </li>
       <li v-if="wordLength !== 3" @click="$emit('switch', 3)">
