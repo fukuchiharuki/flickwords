@@ -45,6 +45,7 @@
 </template>
 
 <script setup lang="ts">
+  import { gameNumberFrom } from '../libs/seed'
   import Score, {
     statisticsOf,
     guessDistributionOf
@@ -67,7 +68,7 @@
   const text = computed(
     () =>
       'Flickwords' +
-      ` L${props.wordLength}#${props.result.seed[3]}` +
+      ` ${props.wordLength}:${gameNumberFrom(props.result.seed)}` +
       ` ${
         props.result.score.lastPlay === props.result.score.lastWin
           ? props.result.emojiTiles.length

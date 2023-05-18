@@ -1,3 +1,5 @@
+import { CURRENT_GAME, PREVIOUS_GAME } from '~/libs/seed'
+
 type Score = {
   records: number[]
   currentStreak: number
@@ -47,18 +49,18 @@ export function updateScore(
   resultRound: number,
   seed: number[]
 ): Score {
-  if (score.lastPlay === seed[0]) return score
+  if (score.lastPlay === seed[CURRENT_GAME]) return score
   const records = [...score.records]
   records[resultRound] = records[resultRound] + 1
   const win = resultRound > 0 ? 1 : 0
-  const continuousWin = win && score.lastWin === seed[1]
+  const continuousWin = win && score.lastWin === seed[PREVIOUS_GAME]
   const currentStreak = win + (continuousWin ? score.currentStreak : 0)
   return {
     records,
     currentStreak,
     maxStreak: Math.max(currentStreak, score.maxStreak),
-    lastPlay: seed[0],
-    lastWin: win ? seed[0] : score.lastWin,
+    lastPlay: seed[CURRENT_GAME],
+    lastWin: win ? seed[CURRENT_GAME] : score.lastWin,
     resultRound
   }
 }

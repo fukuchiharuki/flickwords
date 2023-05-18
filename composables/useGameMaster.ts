@@ -6,6 +6,7 @@ import {
   saveAnswerBackup
 } from '~/repositories/Answer'
 import { consonantMap, regulationMap, vowelMap } from '~/consts/charMap'
+import { generateSeed, indexFrom } from '~/libs/seed'
 
 export default function useGameMaster(
   wordLength: Ref<number>,
@@ -34,10 +35,7 @@ export default function useGameMaster(
   function initialize() {
     keyLock.value = false
     seed.value = generateSeed()
-    correctWord.value = correctWordOf(
-      dictionary.value,
-      randomFrom(seed.value[0])
-    )
+    correctWord.value = correctWordOf(dictionary.value, indexFrom(seed.value))
     validateStart(restore())
   }
 
@@ -77,51 +75,13 @@ export default function useGameMaster(
   }
 }
 
-function generateSeed(): number[] {
-  const current = currentSeed()
-  const previous = previousSeedOf(current)
-  const primitive = primitiveSeed()
-  const seed = [current, previous, primitive]
-  const number = numberOfGame(seed)
-  return seed.concat(number)
-}
-
-function interval(): number {
-  // return 86400000 // 24 hours: 1000 * 60 * 60 * 24
-  return 60000 // 1 minute: 1000 * 60
-}
-
-function currentSeed(): number {
-  const date = new Date()
-  const timestamp = date.getTime()
-  return timestamp - (timestamp % interval()) + date.getTimezoneOffset() * 60000
-}
-
-function previousSeedOf(currentSeed: number): number {
-  return currentSeed - interval()
-}
-
-function primitiveSeed(): number {
-  return new Date(2023, 5 - 1, 18).getTime()
-}
-
-function numberOfGame(seed: number[]): number {
-  return (seed[0] - seed[2]) / (seed[0] - seed[1])
-}
-
-function randomFrom(seed: number): number {
-  const dt = new Date(seed)
-  const yyyy = dt.getFullYear()
-  const MM = ('00' + (dt.getMonth() + 1)).slice(-2)
-  const dd = ('00' + dt.getDate()).slice(-2)
-  const yyMMdd = (yyyy + MM + dd).slice(-6)
-  const rand = [...yyMMdd].reverse().join('')
-  return Number(rand)
-}
-
-function correctWordOf(dictionary: string[], rand: number): string {
-  console.log(rand % dictionary.length, dictionary[rand % dictionary.length])
-  return dictionary[rand % dictionary.length]
+function correctWordOf(dictionary: string[], index: number): string {
+  console.log(
+    index,
+    index % dictionary.length,
+    dictionary[index % dictionary.length]
+  )
+  return dictionary[index % dictionary.length]
 }
 
 function results(text: string, correctWord: string): string[][] {
