@@ -1,7 +1,12 @@
 <template>
   <div class="menu animate__animated animate__fadeInUp">
     <strong class="title">FLICKWORDS</strong>
-    <strong>MORE GAMES</strong>
+    <p>
+      Flickwords is a flick input Japanese word game based off of the
+      <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank"
+        >New York Times' Wordle</a
+      >. The words update daily.
+    </p>
     <ul>
       <li @click="$emit('switch', wordLength)">
         <span class="icon">☕️</span>New Game
@@ -17,6 +22,7 @@
         <span class="icon">🌸</span>5 Letter Words
       </li>
     </ul>
+    <hr />
     <div class="close" @click="$emit('close')">✕️</div>
   </div>
 </template>
@@ -54,6 +60,16 @@
       position: absolute;
       top: 20px;
       right: 20px;
+    }
+
+    hr {
+      width: 96%;
+      margin: 20px auto;
+      border-top: 1px solid lightgray;
+    }
+
+    p {
+      font-size: small;
     }
 
     strong {

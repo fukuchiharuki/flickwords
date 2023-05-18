@@ -134,6 +134,12 @@
       right: 20px;
     }
 
+    hr {
+      width: 96%;
+      margin: 20px auto;
+      border-top: 1px solid lightgray;
+    }
+
     strong {
       display: block;
       font-size: small;
@@ -156,12 +162,6 @@
         font-size: xx-small;
       }
     }
-  }
-
-  hr {
-    width: 96%;
-    margin: 20px auto;
-    border-top: 1px solid lightgray;
   }
 
   .share {
