@@ -1,5 +1,5 @@
 <template>
-  <div class="result animate__animated animate__fadeInUp">
+  <div class="floating-window result animate__animated animate__fadeInUp">
     <strong>STATISTICS {{ wordLength }}:{{ gameNumber }}</strong>
     <div class="statistics">
       <div class="item">
@@ -111,38 +111,28 @@
 </script>
 
 <style lang="scss" scoped>
-  .result {
-    z-index: 1;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    overflow-y: scroll;
-    background-color: white;
-    border-radius: 8px;
-    box-sizing: border-box;
-    padding: 32px 16px;
+  .share {
+    text-align: center;
 
-    &.animate__fadeInUp {
-      --animate-duration: 0.4s;
+    .tweet {
+      button {
+        background-color: #00acee;
+        color: white;
+      }
     }
 
-    .close {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-    }
-
-    hr {
-      width: 96%;
-      margin: 20px auto;
-      border-top: 1px solid lightgray;
-    }
-
-    strong {
-      display: block;
+    .copy {
+      margin-top: 16px;
       font-size: small;
+
+      .success {
+        visibility: hidden;
+        color: #6aaa64;
+
+        &.visible {
+          visibility: visible;
+        }
+      }
     }
   }
 
@@ -160,40 +150,6 @@
       .name {
         margin-top: 4px;
         font-size: xx-small;
-      }
-    }
-  }
-
-  .share {
-    text-align: center;
-
-    .tweet {
-      button {
-        width: 160px;
-        height: 36px;
-        border: 0;
-        border-radius: 18px;
-        background-color: #00acee;
-        font-weight: bold;
-        color: white;
-      }
-    }
-
-    .copy {
-      margin-top: 16px;
-      font-size: small;
-
-      a {
-        text-decoration: underline;
-      }
-
-      .success {
-        visibility: hidden;
-        color: #6aaa64;
-
-        &.visible {
-          visibility: visible;
-        }
       }
     }
   }
