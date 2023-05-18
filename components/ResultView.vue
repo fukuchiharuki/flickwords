@@ -38,7 +38,15 @@
     </div>
     <hr />
     <div class="share">
-      <button class="tweet" @click="tweet">Tweet</button>
+      <div class="tweet">
+        <button @click="tweet">Tweet</button>
+      </div>
+      <div class="copy">
+        <a @click="copy">or copy to the clipboard</a>
+        <div class="success" :class="{ visible: successfullyCopied }">
+          successfully copied
+        </div>
+      </div>
     </div>
     <div class="close" @click="$emit('close')">✕️</div>
   </div>
@@ -88,6 +96,16 @@
       `?text=${encodeURIComponent(text.value)}` +
       `&url=${encodeURIComponent(url)}`
     window.open(tweetUrl, 'tweet')
+  }
+
+  const successfullyCopied = ref(false)
+  async function copy() {
+    const copyText = text.value + url
+    await navigator.clipboard.writeText(copyText)
+    successfullyCopied.value = true
+    setTimeout(() => {
+      successfullyCopied.value = false
+    }, 1000)
   }
 </script>
 
@@ -148,14 +166,34 @@
   .share {
     text-align: center;
 
-    button.tweet {
-      width: 120px;
-      height: 36px;
-      border: 0;
-      border-radius: 18px;
-      background-color: #00acee;
-      font-weight: bold;
-      color: white;
+    .tweet {
+      button {
+        width: 120px;
+        height: 36px;
+        border: 0;
+        border-radius: 18px;
+        background-color: #00acee;
+        font-weight: bold;
+        color: white;
+      }
+    }
+
+    .copy {
+      margin-top: 8px;
+      font-size: small;
+
+      a {
+        text-decoration: underline;
+      }
+
+      .success {
+        visibility: hidden;
+        color: #6aaa64;
+
+        &.visible {
+          visibility: visible;
+        }
+      }
     }
   }
 
