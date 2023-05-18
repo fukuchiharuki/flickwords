@@ -8,17 +8,22 @@ import useGameMaster from '../composables/useGameMaster';
       <VirtualKeyboard @input="onInput" />
     </template>
   </VirtualConsole>
-  <ResultView
+  <ResultWindow
     v-if="resultOnDisplay"
     :word-length="wordLength"
     :result="result"
     @close="resultOnDisplay = false"
   />
-  <MenuView
+  <MenuWindow
     v-if="menuOnDisplay"
     :word-length="wordLength"
     @switch="$emit('switch', $event)"
     @close="menuOnDisplay = false"
+  />
+  <HelpWindow
+    v-if="helpOnDisplay"
+    :word-length="wordLength"
+    @close="helpOnDisplay = false"
   />
 </template>
 
@@ -48,6 +53,7 @@ import useGameMaster from '../composables/useGameMaster';
   )
 
   const menuOnDisplay = ref(false)
+  const helpOnDisplay = ref(false)
 
   function onInput(args: { type: string; value: string }) {
     const { type, value } = args
@@ -56,6 +62,9 @@ import useGameMaster from '../composables/useGameMaster';
     if (type === 'func' && value === 'enter') !keyLock.value && enter()
     if (type === 'func' && value === 'menu') {
       menuOnDisplay.value = true
+    }
+    if (type === 'func' && value === 'help') {
+      helpOnDisplay.value = true
     }
   }
 </script>

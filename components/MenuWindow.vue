@@ -44,7 +44,6 @@
       margin: 24px 0;
       padding-left: 0;
       list-style-type: none;
-      font-size: small;
 
       li {
         & + li {
