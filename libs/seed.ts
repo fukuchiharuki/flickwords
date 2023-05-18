@@ -16,7 +16,7 @@ function interval(): number {
 function currentGame(): number {
   const date = new Date()
   const timestamp = date.getTime()
-  return timestamp - (timestamp % interval())
+  return timestamp - (timestamp % interval()) + date.getTimezoneOffset() * 60000
 }
 
 function previousGameOf(currentGame: number): number {
@@ -25,7 +25,7 @@ function previousGameOf(currentGame: number): number {
 
 function primitiveGame(): number {
   const date = new Date(2023, 5 - 1, 18)
-  return date.getTime() - date.getTimezoneOffset() * 60000
+  return date.getTime()
 }
 
 export function indexFrom(seed: number[]): number {
