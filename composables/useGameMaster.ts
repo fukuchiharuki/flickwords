@@ -48,7 +48,6 @@ export default function useGameMaster(
   function validateStart(answer: Answer | null) {
     if (!answer) return
     if (finished(answer)) {
-      console.log('key locked')
       keyLock.value = true
       setTimeout(() => {
         restoreScore(wordLength.value, seed.value, answer)
