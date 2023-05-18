@@ -3,12 +3,16 @@ import Score, { getScore, saveScore, updateScore } from '~/repositories/Score'
 
 export default function useGameScorer(): {
   resultOnDisplay: Ref<boolean>
-  result: Ref<{ score: Score; emojiTiles: string[] }>
+  result: Ref<{ seed: number[]; score: Score; emojiTiles: string[] }>
   keepScore: (wordLength: number, seed: number[], answer: Answer) => void
-  restoreScore: (wordLength: number, answer: Answer) => void
+  restoreScore: (wordLength: number, seed: number[], answer: Answer) => void
 } {
   const resultOnDisplay = ref(false)
-  const result = ref({ score: {} as Score, emojiTiles: [] as string[] })
+  const result = ref({
+    seed: [] as number[],
+    score: {} as Score,
+    emojiTiles: [] as string[]
+  })
 
   return {
     resultOnDisplay,
@@ -25,24 +29,24 @@ export default function useGameScorer(): {
     const emojiTiles = resultRound
       ? emojiTilesOf(answer).slice(0, resultRound)
       : emojiTilesOf(answer)
-    show(updatedScore, emojiTiles)
+    show(seed, updatedScore, emojiTiles)
     console.log('GAME OVER', wordLength, resultRound, emojiTiles)
     console.log(updatedScore)
   }
 
-  function restoreScore(wordLength: number, answer: Answer) {
+  function restoreScore(wordLength: number, seed: number[], answer: Answer) {
     const resultRound = resultRoundOf(answer)
     const score = getScore(wordLength)
     const emojiTiles = resultRound
       ? emojiTilesOf(answer).slice(0, resultRound)
       : emojiTilesOf(answer)
-    show(score, emojiTiles)
+    show(seed, score, emojiTiles)
     console.log('GAME OVER', wordLength, resultRound, emojiTiles)
     console.log(score)
   }
 
-  function show(score: Score, emojiTiles: string[]) {
-    result.value = { score, emojiTiles }
+  function show(seed: number[], score: Score, emojiTiles: string[]) {
+    result.value = { seed, score, emojiTiles }
     resultOnDisplay.value = true
   }
 }

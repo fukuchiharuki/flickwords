@@ -52,7 +52,7 @@
 
   const props = defineProps<{
     wordLength: number
-    result: { score: Score; emojiTiles: string[] }
+    result: { seed: number[]; score: Score; emojiTiles: string[] }
   }>()
 
   defineEmits<{
@@ -66,7 +66,8 @@
 
   const text = computed(
     () =>
-      `Flickwords (L${props.wordLength})` +
+      'Flickwords' +
+      ` L${props.wordLength}#${props.result.seed[3]}` +
       ` ${
         props.result.score.lastPlay === props.result.score.lastWin
           ? props.result.emojiTiles.length

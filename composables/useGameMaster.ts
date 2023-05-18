@@ -15,7 +15,7 @@ export default function useGameMaster(
   compare: (results: string[][]) => Status,
   reset: (answer: Answer | null) => void,
   keepScore: (wordLength: number, seed: number[], answer: Answer) => void,
-  restoreScore: (wordLength: number, answer: Answer) => void
+  restoreScore: (wordLength: number, seed: number[], answer: Answer) => void
 ): {
   keyLock: Ref<boolean>
   enter: () => void
@@ -53,7 +53,7 @@ export default function useGameMaster(
       console.log('key locked')
       keyLock.value = true
       setTimeout(() => {
-        restoreScore(wordLength.value, answer)
+        restoreScore(wordLength.value, seed.value, answer)
       }, 1500)
     }
   }
@@ -80,12 +80,15 @@ export default function useGameMaster(
 function generateSeed(): number[] {
   const current = currentSeed()
   const previous = previousSeedOf(current)
-  return [current, previous]
+  const primitive = primitiveSeed()
+  const seed = [current, previous, primitive]
+  const number = numberOfGame(seed)
+  return seed.concat(number)
 }
 
 function interval(): number {
   // return 86400000 // 24 hours: 1000 * 60 * 60 * 24
-  return 1000 * 60
+  return 60000 // 1 minute: 1000 * 60
 }
 
 function currentSeed(): number {
@@ -96,6 +99,14 @@ function currentSeed(): number {
 
 function previousSeedOf(currentSeed: number): number {
   return currentSeed - interval()
+}
+
+function primitiveSeed(): number {
+  return new Date(2023, 5 - 1, 18).getTime()
+}
+
+function numberOfGame(seed: number[]): number {
+  return (seed[0] - seed[2]) / (seed[0] - seed[1])
 }
 
 function randomFrom(seed: number): number {
