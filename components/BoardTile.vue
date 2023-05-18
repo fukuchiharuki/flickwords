@@ -35,13 +35,9 @@
     border: 2px solid lightgray;
 
     &.unused {
-      background-color: darkgray;
-      border-color: darkgray;
+      background-color: #e9e9e9;
+      border-color: #e9e9e9;
       color: white;
-
-      .char::before {
-        content: '－';
-      }
     }
 
     &.correct {
