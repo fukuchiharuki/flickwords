@@ -96,7 +96,7 @@
       'https://twitter.com/intent/tweet' +
       `?text=${encodeURIComponent(text.value)}` +
       `&url=${encodeURIComponent(url)}`
-    window.open(tweetUrl, 'tweet')
+    window.open(tweetUrl, '_blank')
   }
 
   const successfullyCopied = ref(false)
