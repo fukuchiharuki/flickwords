@@ -39,10 +39,10 @@
     <hr />
     <div class="share">
       <div class="tweet">
-        <button @click="tweet">Tweet</button>
+        <button @click="tweet">Tweet the results</button>
       </div>
       <div class="copy">
-        <a @click="copy">or copy to the clipboard</a>
+        <a @click="copy">or copy them to the clipboard</a>
         <div class="success" :class="{ visible: successfullyCopied }">
           successfully copied
         </div>
@@ -169,7 +169,7 @@
 
     .tweet {
       button {
-        width: 120px;
+        width: 160px;
         height: 36px;
         border: 0;
         border-radius: 18px;
@@ -180,7 +180,7 @@
     }
 
     .copy {
-      margin-top: 8px;
+      margin-top: 16px;
       font-size: small;
 
       a {
