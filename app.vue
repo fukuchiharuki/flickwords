@@ -11,13 +11,23 @@
 
 <script setup lang="ts">
   import 'animate.css'
+  import {
+    initialWordLength,
+    SettingsChange,
+    saveSettingsChange
+  } from './repositories/Settings'
 
-  const wordLength = ref(5)
+  const wordLength = ref(initialWordLength())
   const { data, pending, refresh } = await useDictionary(wordLength)
   const dictionary = computed(() => data.value || [])
 
-  async function switchGame(nextWordLength: number) {
-    wordLength.value = nextWordLength
+  async function switchGame(newWordLength: number) {
+    wordLength.value = newWordLength
     await refresh()
+    saveWordLength(newWordLength)
+  }
+
+  function saveWordLength(wordLength: number) {
+    saveSettingsChange({ wordLength } as SettingsChange)
   }
 </script>
