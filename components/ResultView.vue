@@ -1,6 +1,6 @@
 <template>
   <div class="result animate__animated animate__fadeInUp">
-    <strong>STATISTICS (L{{ wordLength }})</strong>
+    <strong>STATISTICS {{ wordLength }}:{{ gameNumber }}</strong>
     <div class="statistics">
       <div class="item">
         <div class="value">{{ statistics.played }}</div>
@@ -60,6 +60,7 @@
     (e: 'close'): void
   }>()
 
+  const gameNumber = computed(() => gameNumberFrom(props.result.seed))
   const statistics = computed(() => statisticsOf(props.result.score))
   const guessDistribution = computed(() =>
     guessDistributionOf(props.result.score)
@@ -68,7 +69,7 @@
   const text = computed(
     () =>
       'Flickwords' +
-      ` ${props.wordLength}:${gameNumberFrom(props.result.seed)}` +
+      ` ${props.wordLength}:${gameNumber.value}` +
       ` ${
         props.result.score.lastPlay === props.result.score.lastWin
           ? props.result.emojiTiles.length
