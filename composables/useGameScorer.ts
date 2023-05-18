@@ -1,5 +1,5 @@
 import { Answer } from '~/repositories/Answer'
-import Score, { getScore, saveScore, updateScore } from '~/repositories/Score'
+import Score, { getScore, saveScoreUpdate } from '~/repositories/Score'
 
 export default function useGameScorer(): {
   resultOnDisplay: Ref<boolean>
@@ -23,9 +23,7 @@ export default function useGameScorer(): {
 
   function keepScore(wordLength: number, seed: number[], answer: Answer) {
     const resultRound = resultRoundOf(answer)
-    const score = getScore(wordLength)
-    const updatedScore = updateScore(score, resultRound, seed)
-    saveScore(wordLength, updatedScore)
+    const updatedScore = saveScoreUpdate(wordLength, seed, resultRound)
     const emojiTiles = resultRound
       ? emojiTilesOf(answer).slice(0, resultRound)
       : emojiTilesOf(answer)

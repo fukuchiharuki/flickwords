@@ -44,6 +44,17 @@ export function guessDistributionOf(score: Score): GuessDistribution[] {
   }))
 }
 
+export function saveScoreUpdate(
+  wordLength: number,
+  seed: number[],
+  resultRound: number
+): Score {
+  const score = getScore(wordLength)
+  const updatedScore = updateScore(score, resultRound, seed)
+  saveScore(wordLength, updatedScore)
+  return updatedScore
+}
+
 export function updateScore(
   score: Score,
   resultRound: number,
