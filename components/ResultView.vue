@@ -36,6 +36,10 @@
         </div>
       </div>
     </div>
+    <hr />
+    <div class="share">
+      <button class="tweet" @click="tweet">Tweet</button>
+    </div>
     <div class="close" @click="$emit('close')">✕️</div>
   </div>
 </template>
@@ -59,6 +63,29 @@
   const guessDistribution = computed(() =>
     guessDistributionOf(props.result.score)
   )
+
+  const text = computed(
+    () =>
+      `Flickwords (L${props.wordLength})` +
+      ` ${
+        props.result.score.lastPlay === props.result.score.lastWin
+          ? props.result.emojiTiles.length
+          : 0
+      }/6` +
+      '\n\n' +
+      props.result.emojiTiles.join('\n') +
+      '\n\n'
+  )
+
+  const url = 'http://localhost:3000/'
+
+  function tweet() {
+    const tweetUrl =
+      'https://twitter.com/intent/tweet' +
+      `?text=${encodeURIComponent(text.value)}` +
+      `&url=${encodeURIComponent(url)}`
+    window.open(tweetUrl, 'tweet')
+  }
 </script>
 
 <style lang="scss" scoped>
@@ -106,6 +133,26 @@
         margin-top: 4px;
         font-size: xx-small;
       }
+    }
+  }
+
+  hr {
+    width: 96%;
+    margin: 20px auto;
+    border-top: 1px solid lightgray;
+  }
+
+  .share {
+    text-align: center;
+
+    button.tweet {
+      width: 120px;
+      height: 36px;
+      border: 0;
+      border-radius: 18px;
+      background-color: #00acee;
+      font-weight: bold;
+      color: white;
     }
   }
 
