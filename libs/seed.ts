@@ -16,8 +16,8 @@ function interval(): number {
 function currentGame(): number {
   const date = new Date()
   const timestamp = date.getTime()
-  const offset = (timestamp - date.getTimezoneOffset() * 60000) % interval()
-  return timestamp - offset
+  const localTimePassage = timestamp - date.getTimezoneOffset() * 60000
+  return timestamp - (localTimePassage % interval())
 }
 
 function previousGameOf(currentGame: number): number {
