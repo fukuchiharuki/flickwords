@@ -56,7 +56,10 @@ export default function useGameMaster(
   }
 
   function enter() {
-    if (wordLength.value > text.value.length) {
+    if (
+      text.value.length < wordLength.value ||
+      !dictionary.value.includes(text.value)
+    ) {
       shake()
       return
     }
