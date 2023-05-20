@@ -8,9 +8,7 @@ export const CURRENT_GAME = 0
 export const PREVIOUS_GAME = 1
 
 function interval(): number {
-  // TODO: One game a day
-  // return 86400000 // 24 hours: 1000 * 60 * 60 * 24
-  return 60000 // 1 minute: 1000 * 60
+  return 86400000 // 24 hours: 1000 * 60 * 60 * 24
 }
 
 function currentGame(): number {
@@ -29,13 +27,17 @@ function primitiveGame(): number {
   return date.getTime()
 }
 
-export function indexFrom(seed: number[]): number {
+function serialNumberFrom(seed: number[]): number {
   return (
     (seed[CURRENT_GAME] - primitiveGame()) /
     (seed[CURRENT_GAME] - seed[PREVIOUS_GAME])
   )
 }
 
+export function indexFrom(seed: number[]): number {
+  return serialNumberFrom(seed)
+}
+
 export function gameNumberFrom(seed: number[]): number {
-  return indexFrom(seed) + 1
+  return serialNumberFrom(seed) + 1
 }
