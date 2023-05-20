@@ -1,8 +1,8 @@
 <template>
   <div class="keyboard">
     <div class="keyboard-layout keyboard-layout--left">
-      <KeyboardSideKey label="☰" @click="onClick('menu')" />
       <KeyboardSideKey label="❔" @click="onClick('help')" />
+      <KeyboardSideKey label="☰" @click="onClick('menu')" />
     </div>
     <div class="keyboard-layout keyboard-layout--main">
       <KeyboardKey
