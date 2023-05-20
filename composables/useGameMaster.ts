@@ -78,11 +78,6 @@ export default function useGameMaster(
 }
 
 function correctWordOf(dictionary: string[], index: number): string {
-  console.log(
-    index,
-    index % dictionary.length,
-    dictionary[index % dictionary.length]
-  )
   return dictionary[index % dictionary.length]
 }
 

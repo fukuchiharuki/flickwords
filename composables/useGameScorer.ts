@@ -28,8 +28,6 @@ export default function useGameScorer(): {
       ? emojiTilesOf(answer).slice(0, resultRound)
       : emojiTilesOf(answer)
     show(seed, updatedScore, emojiTiles)
-    console.log('GAME OVER', wordLength, resultRound, emojiTiles)
-    console.log(updatedScore)
   }
 
   function restoreScore(wordLength: number, seed: number[], answer: Answer) {
@@ -39,8 +37,6 @@ export default function useGameScorer(): {
       ? emojiTilesOf(answer).slice(0, resultRound)
       : emojiTilesOf(answer)
     show(seed, score, emojiTiles)
-    console.log('GAME OVER', wordLength, resultRound, emojiTiles)
-    console.log(score)
   }
 
   function show(seed: number[], score: Score, emojiTiles: string[]) {
