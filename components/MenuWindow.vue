@@ -23,6 +23,14 @@
       </li>
     </ul>
     <hr />
+    <strong>Support Me</strong>
+    <ul>
+      <li>
+        <a href="https://forms.gle/3hrkaJKyJvFCwkvg9" target="_blank">
+          <span class="icon">📋</span>Feedback
+        </a>
+      </li>
+    </ul>
     <div class="close" @click="$emit('close')">✕️</div>
   </div>
 </template>
@@ -48,6 +56,11 @@
       li {
         & + li {
           margin-top: 16px;
+        }
+
+        a {
+          text-decoration: inherit;
+          color: inherit;
         }
 
         .icon {
