@@ -1,12 +1,15 @@
-export default async function useDictionary(wordLength: number): Promise<{
+export default async function useDictionary(wordLength: Ref<number>): Promise<{
   data: Ref<string[] | null>
   pending: Ref<boolean>
+  refresh: () => Promise<void>
 }> {
-  const { data, pending } = await useFetch<string[]>(
-    `dictionaries/kana${wordLength}.json`
+  const { data, pending, refresh } = await useFetch<string[]>(
+    () => `dictionaries/kana${wordLength.value}.json`
   )
+
   return {
     data,
-    pending
+    pending,
+    refresh
   }
 }

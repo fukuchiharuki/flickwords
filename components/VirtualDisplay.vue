@@ -1,8 +1,6 @@
 <template>
   <div class="display">
-    <h1 class="title">
-      jWORDLE <sup><i>FLICK</i></sup>
-    </h1>
+    <h1 class="title">FLICKWORDS</h1>
     <div class="container">
       <GameBoard :answer="answer" />
     </div>
@@ -10,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-  import { Answer } from '../composables/useGameBoard'
+  import { Answer } from '~/repositories/Answer'
 
   defineProps<{
     answer: Answer
@@ -27,7 +25,7 @@
 
   .title {
     margin: 0;
-    padding: 8px 0 8px 36px;
+    padding: 8px 0;
     border-bottom: 1px solid lightgray;
     text-align: center;
     font-size: large;

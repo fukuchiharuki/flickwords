@@ -1,5 +1,12 @@
-import { Answer, Status } from './useGameBoard'
+import { Status } from './useGameBoard'
+import {
+  Answer,
+  finished,
+  getAnswerBackup,
+  saveAnswerBackup
+} from '~/repositories/Answer'
 import { consonantMap, regulationMap, vowelMap } from '~/consts/charMap'
+import { generateSeed, indexFrom } from '~/libs/seed'
 
 export default function useGameMaster(
   wordLength: Ref<number>,
@@ -7,63 +14,87 @@ export default function useGameMaster(
   text: Ref<string>,
   shake: () => void,
   compare: (results: string[][]) => Status,
-  score: (answer: Answer) => void
+  reset: (answer: Answer | null) => void,
+  keepScore: (wordLength: number, seed: number[], answer: Answer) => void,
+  restoreScore: (wordLength: number, seed: number[], answer: Answer) => void
 ): {
   keyLock: Ref<boolean>
   enter: () => void
 } {
   const keyLock = ref(false)
-  const correct = ref(correctOf(dictionary.value, rand(seed())))
+  const seed = ref([] as number[])
+  const correctWord = ref('')
+
+  initialize()
 
   return {
     keyLock,
     enter
   }
 
+  function initialize() {
+    keyLock.value = false
+    seed.value = generateSeed()
+    correctWord.value = correctWordOf(dictionary.value, indexFrom(seed.value))
+    validateStart(restore())
+  }
+
+  function restore(): Answer | null {
+    const answer = getAnswerBackup(wordLength.value, seed.value[0])
+    reset(answer)
+    return answer
+  }
+
+  function validateStart(answer: Answer | null) {
+    if (!answer) return
+    if (finished(answer)) {
+      keyLock.value = true
+      setTimeout(() => {
+        restoreScore(wordLength.value, seed.value, answer)
+      }, 1500)
+    }
+  }
+
   function enter() {
-    if (wordLength.value > text.value.length) {
+    if (
+      text.value.length < wordLength.value ||
+      !dictionary.value.includes(text.value)
+    ) {
       shake()
       return
     }
+
     keyLock.value = true
-    const status = compare(results(text.value, correct.value))
+    const status = compare(results(text.value, correctWord.value))
     setTimeout(() => {
+      saveAnswerBackup(wordLength.value, seed.value[0], status.answer)
       if (!status.gameOver) keyLock.value = false
       if (status.gameOver)
         setTimeout(() => {
-          score(status.answer)
+          keepScore(wordLength.value, seed.value, status.answer)
         }, 1000)
     }, status.duration)
   }
 }
 
-function seed(): string {
-  const dt = new Date()
-  const yyyy = dt.getFullYear()
-  const MM = ('00' + (dt.getMonth() + 1)).slice(-2)
-  const dd = ('00' + dt.getDate()).slice(-2)
-  return (yyyy + MM + dd).slice(-6)
+function correctWordOf(dictionary: string[], index: number): string {
+  console.log(
+    index,
+    index % dictionary.length,
+    dictionary[index % dictionary.length]
+  )
+  return dictionary[index % dictionary.length]
 }
 
-function rand(seed: string): number {
-  const rand = [...seed].reverse().join('')
-  return Number(rand)
-}
-
-function correctOf(dictionary: string[], rand: number): string {
-  console.log(rand % dictionary.length, dictionary[rand % dictionary.length])
-  return dictionary[rand % dictionary.length]
-}
-
-function results(text: string, correct: string): string[][] {
-  const textChars = [...text]
-  const correctChars = [...correct]
+function results(text: string, correctWord: string): string[][] {
+  const textChars = [...text].map((c) => regulated(c))
+  const correctChars = [...correctWord].map((c) => regulated(c))
   return textChars.map((char, index) => {
-    if (regulated(char) === correctChars[index]) return ['correct']
+    if (char === correctChars[index]) return ['correct']
     return [
       vowel(char) === vowel(correctChars[index]) ? 'vowel' : null,
       consonant(char) === consonant(correctChars[index]) ? 'consonant' : null,
-      correctChars.includes(regulated(char)) ? 'present' : 'absent'
+      correctChars.includes(char) ? 'present' : 'absent'
     ].filter((it) => it) as string[]
   })
 }
@@ -72,10 +103,10 @@ function regulated(char: string) {
   return regulationMap[char] || char
 }
 
-function vowel(char: string) {
-  return vowelMap[regulated(char)] || char
+function vowel(regulatedChar: string) {
+  return vowelMap[regulatedChar] || regulatedChar
 }
 
-function consonant(char: string) {
-  return consonantMap[regulated(char)] || char
+function consonant(regulatedChar: string) {
+  return consonantMap[regulatedChar] || regulatedChar
 }

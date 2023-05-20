@@ -1,35 +1,67 @@
-import { Answer } from './useGameBoard'
+import { Answer } from '~/repositories/Answer'
+import Score, { getScore, saveScoreUpdate } from '~/repositories/Score'
 
 export default function useGameScorer(): {
-  score: (answer: Answer) => void
+  resultOnDisplay: Ref<boolean>
+  result: Ref<{ seed: number[]; score: Score; emojiTiles: string[] }>
+  keepScore: (wordLength: number, seed: number[], answer: Answer) => void
+  restoreScore: (wordLength: number, seed: number[], answer: Answer) => void
 } {
+  const resultOnDisplay = ref(false)
+  const result = ref({
+    seed: [] as number[],
+    score: {} as Score,
+    emojiTiles: [] as string[]
+  })
+
   return {
-    score
+    resultOnDisplay,
+    result,
+    keepScore,
+    restoreScore
   }
 
-  function score(answer: Answer) {
-    const correctedRound = correctedRoundOf(answer)
-    const emojiTiles = correctedRound
-      ? emojiTilesOf(answer).slice(0, correctedRound)
+  function keepScore(wordLength: number, seed: number[], answer: Answer) {
+    const resultRound = resultRoundOf(answer)
+    const updatedScore = saveScoreUpdate(wordLength, seed, resultRound)
+    const emojiTiles = resultRound
+      ? emojiTilesOf(answer).slice(0, resultRound)
       : emojiTilesOf(answer)
-    console.log('GAME OVER', correctedRound, emojiTiles)
+    show(seed, updatedScore, emojiTiles)
+    console.log('GAME OVER', wordLength, resultRound, emojiTiles)
+    console.log(updatedScore)
+  }
+
+  function restoreScore(wordLength: number, seed: number[], answer: Answer) {
+    const resultRound = resultRoundOf(answer)
+    const score = getScore(wordLength)
+    const emojiTiles = resultRound
+      ? emojiTilesOf(answer).slice(0, resultRound)
+      : emojiTilesOf(answer)
+    show(seed, score, emojiTiles)
+    console.log('GAME OVER', wordLength, resultRound, emojiTiles)
+    console.log(score)
+  }
+
+  function show(seed: number[], score: Score, emojiTiles: string[]) {
+    result.value = { seed, score, emojiTiles }
+    resultOnDisplay.value = true
   }
 }
 
-function correctedRoundOf(answer: Answer): number {
+function resultRoundOf(answer: Answer): number {
   return answer.words.reduce(
-    (correctedRound, word, index) =>
-      word.chars.reduce(
-        (acc, char) => acc && char.result.includes('correct'),
-        true
-      )
+    (resultRound, word, index) =>
+      word.chars
+        .filter((c) => !c.unused)
+        .reduce((acc, char) => acc && char.result.includes('correct'), true)
         ? index + 1
-        : correctedRound,
+        : resultRound,
     0
   )
 }
 
-function emojiTilesOf(answer: Answer) {
+function emojiTilesOf(answer: Answer): string[] {
   return answer.words.map((word) =>
     word.chars
       .map((char) =>

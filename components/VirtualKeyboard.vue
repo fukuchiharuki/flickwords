@@ -2,7 +2,7 @@
   <div class="keyboard">
     <div class="keyboard-layout keyboard-layout--left">
       <KeyboardSideKey label="☰" @click="onClick('menu')" />
-      <KeyboardSideKey label="❔" @click="onClick('manual')" />
+      <KeyboardSideKey label="❔" @click="onClick('help')" />
     </div>
     <div class="keyboard-layout keyboard-layout--main">
       <KeyboardKey
