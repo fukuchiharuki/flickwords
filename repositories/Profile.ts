@@ -1,12 +1,19 @@
 type Profile = {
+  intro: boolean
   wordLength: number
 }
 
 export type ProfileChange = {
+  intro?: boolean
   wordLength?: number
 }
 
 export default Profile
+
+export function alreadyIntroduced(): boolean {
+  const settings = getProfile()
+  return settings.intro
+}
 
 export function initialWordLength(): number {
   const settings = getProfile()
@@ -20,21 +27,20 @@ export function saveProfileChange(change: ProfileChange): Profile {
   return updatedProfile
 }
 
-export function updateProfile(
-  settings: Profile,
-  change: ProfileChange
-): Profile {
+function updateProfile(settings: Profile, change: ProfileChange): Profile {
   return {
-    wordLength: change.wordLength ? change.wordLength : settings.wordLength
+    intro: change.intro != null ? change.intro : settings.intro,
+    wordLength:
+      change.wordLength != null ? change.wordLength : settings.wordLength
   }
 }
 
-export function getProfile(): Profile {
+function getProfile(): Profile {
   const data = localStorage.getItem(key())
   return data ? (JSON.parse(data) as Profile) : initialProfile()
 }
 
-export function saveProfile(settings: Profile) {
+function saveProfile(settings: Profile) {
   const data = JSON.stringify(settings)
   localStorage.setItem(key(), data)
 }
@@ -45,6 +51,7 @@ function key(): string {
 
 function initialProfile(): Profile {
   return {
+    intro: false,
     wordLength: 4
   }
 }
