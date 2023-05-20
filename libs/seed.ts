@@ -1,3 +1,5 @@
+import { amidaMap } from '~/consts/numberMap'
+
 export function generateSeed(): number[] {
   const current = currentGame()
   const previous = previousGameOf(current)
@@ -35,7 +37,15 @@ function serialNumberFrom(seed: number[]): number {
 }
 
 export function indexFrom(seed: number[]): number {
-  return serialNumberFrom(seed)
+  return amida(serialNumberFrom(seed))
+}
+
+function amida(sn: number): number {
+  const amidaSize = amidaMap.length
+  return (
+    Math.trunc(sn / amidaSize) * amidaSize +
+    amidaMap[amidaMap[amidaMap[sn % amidaSize]]]
+  )
 }
 
 export function gameNumberFrom(seed: number[]): number {
