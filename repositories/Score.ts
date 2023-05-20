@@ -55,11 +55,7 @@ export function saveScoreUpdate(
   return updatedScore
 }
 
-export function updateScore(
-  score: Score,
-  resultRound: number,
-  seed: number[]
-): Score {
+function updateScore(score: Score, resultRound: number, seed: number[]): Score {
   if (score.lastPlay === seed[CURRENT_GAME]) return score
   const records = [...score.records]
   records[resultRound] = records[resultRound] + 1
@@ -81,7 +77,7 @@ export function getScore(wordLength: number): Score {
   return data ? (JSON.parse(data) as Score) : initialScore()
 }
 
-export function saveScore(wordLength: number, score: Score) {
+function saveScore(wordLength: number, score: Score) {
   const data = JSON.stringify(score)
   localStorage.setItem(keyOf(wordLength), data)
 }
