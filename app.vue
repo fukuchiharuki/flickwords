@@ -13,9 +13,9 @@
   import 'animate.css'
   import {
     initialWordLength,
-    SettingsChange,
-    saveSettingsChange
-  } from './repositories/Settings'
+    ProfileChange,
+    saveProfileChange
+  } from './repositories/Profile'
 
   const wordLength = ref(initialWordLength())
   const { data, pending, refresh } = await useDictionary(wordLength)
@@ -28,6 +28,6 @@
   }
 
   function saveWordLength(wordLength: number) {
-    saveSettingsChange({ wordLength } as SettingsChange)
+    saveProfileChange({ wordLength } as ProfileChange)
   }
 </script>
