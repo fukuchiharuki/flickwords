@@ -11,27 +11,27 @@ export type ProfileChange = {
 export default Profile
 
 export function alreadyIntroduced(): boolean {
-  const settings = getProfile()
-  return settings.intro
+  const profile = getProfile()
+  return profile.intro
 }
 
 export function initialWordLength(): number {
-  const settings = getProfile()
-  return settings.wordLength
+  const profile = getProfile()
+  return profile.wordLength
 }
 
 export function saveProfileChange(change: ProfileChange): Profile {
-  const settings = getProfile()
-  const updatedProfile = updateProfile(settings, change)
+  const profile = getProfile()
+  const updatedProfile = updateProfile(profile, change)
   saveProfile(updatedProfile)
   return updatedProfile
 }
 
-function updateProfile(settings: Profile, change: ProfileChange): Profile {
+function updateProfile(profile: Profile, change: ProfileChange): Profile {
   return {
-    intro: change.intro != null ? change.intro : settings.intro,
+    intro: change.intro != null ? change.intro : profile.intro,
     wordLength:
-      change.wordLength != null ? change.wordLength : settings.wordLength
+      change.wordLength != null ? change.wordLength : profile.wordLength
   }
 }
 
@@ -40,8 +40,8 @@ function getProfile(): Profile {
   return data ? (JSON.parse(data) as Profile) : initialProfile()
 }
 
-function saveProfile(settings: Profile) {
-  const data = JSON.stringify(settings)
+function saveProfile(profile: Profile) {
+  const data = JSON.stringify(profile)
   localStorage.setItem(key(), data)
 }
 
