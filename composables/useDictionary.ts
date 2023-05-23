@@ -1,4 +1,4 @@
-import { regulatedWord } from './useGameMaster'
+import { regulatedWord } from '~/libs/word'
 
 export default async function useDictionary(wordLength: Ref<number>): Promise<{
   data: Ref<string[] | null>

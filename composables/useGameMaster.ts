@@ -5,8 +5,8 @@ import {
   getAnswerBackup,
   saveAnswerBackup
 } from '~/repositories/Answer'
-import { consonantMap, regulationMap, vowelMap } from '~/consts/charMap'
 import { generateSeed, indexFrom } from '~/libs/seed'
+import { consonant, regulated, regulatedWord, vowel } from '~/libs/word'
 
 export default function useGameMaster(
   wordLength: Ref<number>,
@@ -89,20 +89,4 @@ function results(text: string, correctWord: string): string[][] {
       correctChars.includes(char) ? 'present' : 'absent'
     ].filter((it) => it) as string[]
   })
-}
-
-export function regulatedWord(word: string) {
-  return [...word].map((char) => regulated(char)).join('')
-}
-
-function regulated(char: string) {
-  return regulationMap[char] || char
-}
-
-function vowel(regulatedChar: string) {
-  return vowelMap[regulatedChar] || regulatedChar
-}
-
-function consonant(regulatedChar: string) {
-  return consonantMap[regulatedChar] || regulatedChar
 }
