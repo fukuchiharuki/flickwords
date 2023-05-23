@@ -1,10 +1,15 @@
+import { regulatedWord } from '~/libs/word'
+
 export default async function useDictionary(wordLength: Ref<number>): Promise<{
   data: Ref<string[] | null>
   pending: Ref<boolean>
   refresh: () => Promise<void>
 }> {
   const { data, pending, refresh } = await useFetch<string[]>(
-    () => `dictionaries/kana${wordLength.value}.json`
+    () => `dictionaries/kana${wordLength.value}.json`,
+    {
+      transform: (org: string[]) => org.map((word) => regulatedWord(word))
+    }
   )
 
   return {

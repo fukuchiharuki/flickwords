@@ -2,7 +2,7 @@
   <div class="floating-window menu animate__animated animate__fadeInUp">
     <strong class="title">FLICKWORDS</strong>
     <p>
-      Flickwords is a flick input Japanese word game based off of the
+      Flickwords is a flick-typing Japanese word game based on the
       <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank"
         >New York Times' Wordle</a
       >. The words update daily.
@@ -22,6 +22,7 @@
         <span class="icon">🌸</span>5 Letter Words
       </li>
     </ul>
+
     <hr />
     <strong>Support Me</strong>
     <ul>
@@ -31,6 +32,30 @@
         </a>
       </li>
     </ul>
+
+    <hr />
+    <p>
+      This application uses the
+      <a href="https://github.com/flickwords/dictionaries" target="_blank"
+        >kana345</a
+      >
+      data files based on the
+      <a
+        href="https://www.edrdg.org/wiki/index.php/JMdict-EDICT_Dictionary_Project"
+        target="_blank"
+        >JMdict</a
+      >
+      dictionary files.
+    </p>
+    <p>
+      The JMdict dictionary files are the property of the
+      <a href="https://www.edrdg.org/" target="_blank">
+        Electronic Dictionary Research and Development Group</a
+      >, and are used in conformance with the Group's
+      <a href="https://www.edrdg.org/edrdg/licence.html" target="_blank"
+        >licence</a
+      >.
+    </p>
     <div class="close" @click="$emit('close')">✕️</div>
   </div>
 </template>

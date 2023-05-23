@@ -1,6 +1,6 @@
 <template>
   <div class="floating-window result animate__animated animate__fadeInUp">
-    <strong>STATISTICS {{ wordLength }}:{{ gameNumber }}</strong>
+    <strong>STATISTICS {{ gameNumber }}</strong>
     <div class="statistics">
       <div class="item">
         <div class="value">{{ statistics.played }}</div>
@@ -68,7 +68,10 @@
     (e: 'close'): void
   }>()
 
-  const gameNumber = computed(() => gameNumberFrom(props.result.seed))
+  const gameNumber = computed(() => {
+    const number = gameNumberFrom(props.result.seed)
+    return `${props.wordLength}:${number > 0 ? number : 'beta'}`
+  })
   const statistics = computed(() => statisticsOf(props.result.score))
   const guessDistribution = computed(() =>
     guessDistributionOf(props.result.score)
@@ -77,7 +80,7 @@
   const text = computed(
     () =>
       'Flickwords' +
-      ` ${props.wordLength}:${gameNumber.value}` +
+      ` ${gameNumber.value}` +
       ` ${
         props.result.score.lastPlay === props.result.score.lastWin
           ? props.result.emojiTiles.length
@@ -88,8 +91,7 @@
       '\n\n'
   )
 
-  // TODO: URL
-  const url = 'http://localhost:3000/'
+  const url = 'https://flickwords.github.io/'
 
   function tweet() {
     const tweetUrl =

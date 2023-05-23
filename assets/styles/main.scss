@@ -79,3 +79,87 @@ body,
     color: #000000;
   }
 }
+
+.tile {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  box-sizing: border-box;
+  border: 2px solid lightgray;
+
+  .char {
+    text-align: center;
+    font-weight: bold;
+    font-size: medium;
+  }
+
+  &.unused {
+    background-color: #e9e9e9;
+    border-color: #e9e9e9;
+    color: white;
+  }
+
+  &.correct {
+    color: white;
+    background-color: #6aaa64;
+    border-color: #6aaa64;
+  }
+
+  &.present {
+    color: white;
+    background-color: #c9b458;
+    border-color: #c9b458;
+
+    &.vowel {
+      background: linear-gradient(
+        135deg,
+        #c9b458 0%,
+        #c9b458 50%,
+        #6aaa64 50%,
+        #6aaa64 100%
+      );
+      border-color: #c9b458 #6aaa64 #6aaa64 #c9b458;
+    }
+
+    &.consonant {
+      background: linear-gradient(
+        135deg,
+        #6aaa64 0%,
+        #6aaa64 50%,
+        #c9b458 50%,
+        #c9b458 1000%
+      );
+      border-color: #6aaa64 #c9b458 #c9b458 #6aaa64;
+    }
+  }
+
+  &.absent {
+    color: white;
+    background-color: #86888a;
+    border-color: #86888a;
+
+    &.vowel {
+      background: linear-gradient(
+        135deg,
+        #86888a 0%,
+        #86888a 50%,
+        #6aaa64 50%,
+        #6aaa64 100%
+      );
+      border-color: #86888a #6aaa64 #6aaa64 #86888a;
+    }
+
+    &.consonant {
+      background: linear-gradient(
+        135deg,
+        #6aaa64 0%,
+        #6aaa64 50%,
+        #86888a 50%,
+        #86888a 100%
+      );
+      border-color: #6aaa64 #86888a #86888a #6aaa64;
+    }
+  }
+}

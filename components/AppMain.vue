@@ -28,6 +28,12 @@ import useGameMaster from '../composables/useGameMaster';
 </template>
 
 <script setup lang="ts">
+  import {
+    ProfileChange,
+    alreadyIntroduced,
+    saveProfileChange
+  } from '~/repositories/Profile'
+
   const props = defineProps<{
     wordLength: number
     dictionary: string[]
@@ -54,6 +60,12 @@ import useGameMaster from '../composables/useGameMaster';
 
   const menuOnDisplay = ref(false)
   const helpOnDisplay = ref(false)
+
+  if (!alreadyIntroduced())
+    nextTick(() => {
+      helpOnDisplay.value = true
+      saveProfileChange({ intro: true } as ProfileChange)
+    })
 
   function onInput(args: { type: string; value: string }) {
     const { type, value } = args

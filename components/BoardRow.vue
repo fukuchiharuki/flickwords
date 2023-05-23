@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-  import { Word } from '../composables/useGameBoard'
+  import { Word } from '~/repositories/Answer'
 
   defineProps<{
     word: Word

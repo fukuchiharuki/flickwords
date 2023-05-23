@@ -1,11 +1,12 @@
 <template>
   <div class="app">
     <AppMain
-      v-if="!pending && dictionary.length"
+      v-if="ready"
       :word-length="wordLength"
       :dictionary="dictionary"
       @switch="switchGame"
     />
+    <LoadingSign v-if="!ready" />
   </div>
 </template>
 
@@ -13,13 +14,15 @@
   import 'animate.css'
   import {
     initialWordLength,
-    SettingsChange,
-    saveSettingsChange
-  } from './repositories/Settings'
+    ProfileChange,
+    saveProfileChange
+  } from './repositories/Profile'
 
   const wordLength = ref(initialWordLength())
   const { data, pending, refresh } = await useDictionary(wordLength)
   const dictionary = computed(() => data.value || [])
+
+  const ready = computed(() => !pending.value && dictionary.value.length)
 
   async function switchGame(newWordLength: number) {
     wordLength.value = newWordLength
@@ -28,6 +31,6 @@
   }
 
   function saveWordLength(wordLength: number) {
-    saveSettingsChange({ wordLength } as SettingsChange)
+    saveProfileChange({ wordLength } as ProfileChange)
   }
 </script>

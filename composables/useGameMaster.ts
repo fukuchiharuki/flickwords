@@ -5,8 +5,8 @@ import {
   getAnswerBackup,
   saveAnswerBackup
 } from '~/repositories/Answer'
-import { consonantMap, regulationMap, vowelMap } from '~/consts/charMap'
 import { generateSeed, indexFrom } from '~/libs/seed'
+import { consonant, regulated, regulatedWord, vowel } from '~/libs/word'
 
 export default function useGameMaster(
   wordLength: Ref<number>,
@@ -35,7 +35,8 @@ export default function useGameMaster(
   function initialize() {
     keyLock.value = false
     seed.value = generateSeed()
-    correctWord.value = correctWordOf(dictionary.value, indexFrom(seed.value))
+    correctWord.value =
+      dictionary.value[indexFrom(seed.value, dictionary.value.length)]
     validateStart(restore())
   }
 
@@ -58,7 +59,7 @@ export default function useGameMaster(
   function enter() {
     if (
       text.value.length < wordLength.value ||
-      !dictionary.value.includes(text.value)
+      !dictionary.value.includes(regulatedWord(text.value))
     ) {
       shake()
       return
@@ -77,15 +78,6 @@ export default function useGameMaster(
   }
 }
 
-function correctWordOf(dictionary: string[], index: number): string {
-  console.log(
-    index,
-    index % dictionary.length,
-    dictionary[index % dictionary.length]
-  )
-  return dictionary[index % dictionary.length]
-}
-
 function results(text: string, correctWord: string): string[][] {
   const textChars = [...text].map((c) => regulated(c))
   const correctChars = [...correctWord].map((c) => regulated(c))
@@ -97,16 +89,4 @@ function results(text: string, correctWord: string): string[][] {
       correctChars.includes(char) ? 'present' : 'absent'
     ].filter((it) => it) as string[]
   })
-}
-
-function regulated(char: string) {
-  return regulationMap[char] || char
-}
-
-function vowel(regulatedChar: string) {
-  return vowelMap[regulatedChar] || regulatedChar
-}
-
-function consonant(regulatedChar: string) {
-  return consonantMap[regulatedChar] || regulatedChar
 }
