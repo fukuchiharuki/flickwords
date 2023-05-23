@@ -91,8 +91,7 @@
       '\n\n'
   )
 
-  // TODO: URL
-  const url = 'http://localhost:3000/'
+  const url = 'https://flickwords.github.io/'
 
   function tweet() {
     const tweetUrl =
