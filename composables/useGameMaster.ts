@@ -35,7 +35,8 @@ export default function useGameMaster(
   function initialize() {
     keyLock.value = false
     seed.value = generateSeed()
-    correctWord.value = correctWordOf(dictionary.value, indexFrom(seed.value))
+    correctWord.value =
+      dictionary.value[indexFrom(seed.value, dictionary.value.length)]
     validateStart(restore())
   }
 
@@ -75,10 +76,6 @@ export default function useGameMaster(
         }, 1000)
     }, status.duration)
   }
-}
-
-function correctWordOf(dictionary: string[], index: number): string {
-  return dictionary[index % dictionary.length]
 }
 
 function results(text: string, correctWord: string): string[][] {

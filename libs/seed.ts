@@ -1,4 +1,4 @@
-import { amidaMap } from '~/consts/numberMap'
+import Chance from 'chance'
 
 export function generateSeed(): number[] {
   const current = currentGame()
@@ -25,7 +25,7 @@ function previousGameOf(currentGame: number): number {
 }
 
 function primitiveGame(): number {
-  const date = new Date(2023, 5 - 1, 18)
+  const date = new Date(2023, 5 - 1, 31)
   return date.getTime()
 }
 
@@ -36,16 +36,9 @@ function serialNumberFrom(seed: number[]): number {
   )
 }
 
-export function indexFrom(seed: number[]): number {
-  return amida(serialNumberFrom(seed))
-}
-
-function amida(sn: number): number {
-  const amidaSize = amidaMap.length
-  return (
-    Math.trunc(sn / amidaSize) * amidaSize +
-    amidaMap[amidaMap[amidaMap[sn % amidaSize]]]
-  )
+export function indexFrom(seed: number[], size: number): number {
+  const chance = new Chance(serialNumberFrom(seed))
+  return chance.integer({ min: 0, max: size - 1 })
 }
 
 export function gameNumberFrom(seed: number[]): number {
