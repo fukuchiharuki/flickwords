@@ -59,7 +59,7 @@ export default function useGameMaster(
   function enter() {
     if (
       text.value.length < wordLength.value ||
-      !dictionary.value.includes(text.value)
+      !dictionary.value.includes(regulatedWord(text.value))
     ) {
       shake()
       return
@@ -89,6 +89,10 @@ function results(text: string, correctWord: string): string[][] {
       correctChars.includes(char) ? 'present' : 'absent'
     ].filter((it) => it) as string[]
   })
+}
+
+export function regulatedWord(word: string) {
+  return [...word].map((char) => regulated(char)).join('')
 }
 
 function regulated(char: string) {
