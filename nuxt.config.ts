@@ -6,10 +6,10 @@ export default defineNuxtConfig({
     head: {
       title: 'Flickwords',
       meta: [
-        { name: 'description', content: 'A flick input Japanese word game.' },
+        { name: 'description', content: 'A flick-typing Japanese word game.' },
         {
           name: 'keywords',
-          content: 'flickwords,flick,input,japanese,word,game,wordle'
+          content: 'flickwords,flick,typing,japanese,word,game,wordle'
         }
       ],
       link: [
