@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   ssr: false,
   app: {
-    baseURL: '/',
+    baseURL: '/flickwords/',
     head: {
       title: 'Flickwords',
       meta: [
@@ -38,6 +38,11 @@ export default defineNuxtConfig({
           additionalData: '@import "@/assets/styles/_variables.scss";'
         }
       }
+    }
+  },
+  runtimeConfig: {
+    public: {
+      dictionariesBaseURL: 'https://fukuchiharuki.me/kana345/'
     }
   }
 })
