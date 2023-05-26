@@ -91,7 +91,7 @@
       '\n\n'
   )
 
-  const url = 'https://flickwords.github.io/'
+  const url = 'https://fukuchiharuki.me/flickwords/'
 
   function tweet() {
     const tweetUrl =

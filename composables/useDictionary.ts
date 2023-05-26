@@ -5,8 +5,9 @@ export default async function useDictionary(wordLength: Ref<number>): Promise<{
   pending: Ref<boolean>
   refresh: () => Promise<void>
 }> {
+  const config = useRuntimeConfig()
   const { data, pending, refresh } = await useFetch<string[]>(
-    () => `dictionaries/kana${wordLength.value}.json`,
+    () => `${config.public.dictionariesBaseURL}/kana${wordLength.value}.json`,
     {
       transform: (org: string[]) => org.map((word) => regulatedWord(word))
     }

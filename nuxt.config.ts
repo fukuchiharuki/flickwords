@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   ssr: false,
   app: {
-    baseURL: '/',
+    baseURL: '/flickwords/',
     head: {
       title: 'Flickwords',
       meta: [
@@ -22,10 +22,10 @@ export default defineNuxtConfig({
       script: [
         {
           async: true,
-          src: 'https://www.googletagmanager.com/gtag/js?id=G-8R8VVHM76P'
+          src: 'https://www.googletagmanager.com/gtag/js?id=G-HW3SJX60GZ'
         },
         {
-          innerHTML: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-8R8VVHM76P');`
+          innerHTML: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-HW3SJX60GZ');`
         }
       ]
     }
@@ -38,6 +38,11 @@ export default defineNuxtConfig({
           additionalData: '@import "@/assets/styles/_variables.scss";'
         }
       }
+    }
+  },
+  runtimeConfig: {
+    public: {
+      dictionariesBaseURL: 'https://fukuchiharuki.me/kana345/'
     }
   }
 })
