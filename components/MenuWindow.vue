@@ -36,7 +36,7 @@
     <hr />
     <p>
       This application uses the
-      <a href="https://github.com/flickwords/dictionaries" target="_blank"
+      <a href="https://github.com/fukuchiharuki/kana345/" target="_blank"
         >kana345</a
       >
       data files based on the
