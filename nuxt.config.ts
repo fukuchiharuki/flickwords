@@ -13,7 +13,11 @@ export default defineNuxtConfig({
         }
       ],
       link: [
-        { rel: 'icon', type: 'image/vnd.microsoft.icon', href: '/favicon.ico' },
+        {
+          rel: 'icon',
+          type: 'image/vnd.microsoft.icon',
+          href: '/flickwords/favicon.ico'
+        },
         {
           rel: 'stylesheet',
           href: 'https://unpkg.com/balloon-css/balloon.min.css'
