@@ -19,6 +19,10 @@ export default defineNuxtConfig({
           href: '/flickwords/favicon.ico'
         },
         {
+          rel: 'manifest',
+          href: '/flickwords/manifest.json'
+        },
+        {
           rel: 'stylesheet',
           href: 'https://unpkg.com/balloon-css/balloon.min.css'
         }
