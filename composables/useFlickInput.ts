@@ -23,15 +23,27 @@ export default function useFlickInput(
   }
 
   function onTouchStart(e: TouchEvent) {
-    startX.value = e.changedTouches[0].pageX
-    startY.value = e.changedTouches[0].pageY
+    _start(e.changedTouches[0].pageX, e.changedTouches[0].pageY)
+  }
+
+  function onTouchMove(e: TouchEvent) {
+    _move(e.changedTouches[0].pageX, e.changedTouches[0].pageY)
+  }
+
+  function onTouchEnd() {
+    _end()
+  }
+
+  function _start(x: number, y: number) {
+    startX.value = x
+    startY.value = y
     cursor.value = 0
     operating.value = true
   }
 
-  function onTouchMove(e: TouchEvent) {
-    const diffX = e.changedTouches[0].pageX - startX.value
-    const diffY = e.changedTouches[0].pageY - startY.value
+  function _move(x: number, y: number) {
+    const diffX = x - startX.value
+    const diffY = y - startY.value
     const length = Math.sqrt(Math.pow(diffX, 2) + Math.pow(diffY, 2))
     const atan2 = Math.atan2(diffY, diffX)
     const rad = atan2 > 0 ? atan2 : atan2 + 6.28318530718 // Math.PI * 2
@@ -49,7 +61,7 @@ export default function useFlickInput(
         : 3 // right
   }
 
-  function onTouchEnd() {
+  function _end() {
     operating.value = false
     onInput(input.value)
   }
