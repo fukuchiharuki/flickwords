@@ -5,6 +5,7 @@
       @touchstart.prevent="onTouchStart"
       @touchmove.prevent="onTouchMove"
       @touchend.prevent="onTouchEnd"
+      @click="onClick"
     >
       {{ label }}
     </button>
@@ -13,6 +14,8 @@
 </template>
 
 <script setup lang="ts">
+  import isTouchDevice from 'is-touch-device'
+
   const props = defineProps<{
     label: string
     options: (string | null)[]
@@ -27,6 +30,10 @@
 
   function onInput(value: string | null) {
     value && emit('input', value)
+  }
+
+  function onClick() {
+    !isTouchDevice() && window.alert('Oops, this only works on mobile.')
   }
 </script>
 
