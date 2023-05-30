@@ -25,8 +25,8 @@ export default function useGameScorer(): {
     const resultRound = resultRoundOf(answer)
     const updatedScore = saveScoreUpdate(wordLength, seed, resultRound)
     const emojiTiles = resultRound
-      ? emojiTilesOf(answer).slice(0, resultRound)
-      : emojiTilesOf(answer)
+      ? emojiTilesOf(answer, wordLength).slice(0, resultRound)
+      : emojiTilesOf(answer, wordLength)
     show(seed, updatedScore, emojiTiles)
   }
 
@@ -34,8 +34,8 @@ export default function useGameScorer(): {
     const resultRound = resultRoundOf(answer)
     const score = getScore(wordLength)
     const emojiTiles = resultRound
-      ? emojiTilesOf(answer).slice(0, resultRound)
-      : emojiTilesOf(answer)
+      ? emojiTilesOf(answer, wordLength).slice(0, resultRound)
+      : emojiTilesOf(answer, wordLength)
     show(seed, score, emojiTiles)
   }
 
@@ -57,9 +57,10 @@ function resultRoundOf(answer: Answer): number {
   )
 }
 
-function emojiTilesOf(answer: Answer): string[] {
+function emojiTilesOf(answer: Answer, wordLength: number): string[] {
   return answer.words.map((word) =>
     word.chars
+      .slice(0, wordLength)
       .map((char) =>
         char.result.includes('correct')
           ? '🟩'
