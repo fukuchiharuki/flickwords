@@ -1,3 +1,5 @@
+import isTouchDevice from 'is-touch-device'
+
 export default function useFlickInput(
   options: (string | null)[],
   onInput: (value: string | null) => void
@@ -7,6 +9,9 @@ export default function useFlickInput(
   onTouchStart: (e: TouchEvent) => void
   onTouchMove: (e: TouchEvent) => void
   onTouchEnd: (e: TouchEvent) => void
+  onMouseDown: (e: MouseEvent) => void
+  onMouseMove: (e: MouseEvent) => void
+  onMouseUp: (e: MouseEvent) => void
 } {
   const startX = ref(0.0)
   const startY = ref(0.0)
@@ -19,7 +24,10 @@ export default function useFlickInput(
     operating,
     onTouchStart,
     onTouchMove,
-    onTouchEnd
+    onTouchEnd,
+    onMouseDown,
+    onMouseMove,
+    onMouseUp
   }
 
   function onTouchStart(e: TouchEvent) {
@@ -31,6 +39,23 @@ export default function useFlickInput(
   }
 
   function onTouchEnd() {
+    _end()
+  }
+
+  function onMouseDown(e: MouseEvent) {
+    if (isTouchDevice()) return
+    _start(e.clientX, e.clientY)
+  }
+
+  function onMouseMove(e: MouseEvent) {
+    if (isTouchDevice()) return
+    if (!operating.value) return
+    _move(e.clientX, e.clientY)
+  }
+
+  function onMouseUp() {
+    if (isTouchDevice()) return
+    if (!operating.value) return
     _end()
   }
 

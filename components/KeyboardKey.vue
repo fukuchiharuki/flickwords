@@ -5,7 +5,7 @@
       @touchstart.prevent="onTouchStart"
       @touchmove.prevent="onTouchMove"
       @touchend.prevent="onTouchEnd"
-      @click="onClick"
+      @mousedown="onMouseDown"
     >
       {{ label }}
     </button>
@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-  import isTouchDevice from 'is-touch-device'
+  import { useEventListener } from '@vueuse/core'
 
   const props = defineProps<{
     label: string
@@ -25,16 +25,23 @@
     (e: 'input', value: string): void
   }>()
 
-  const { input, operating, onTouchStart, onTouchMove, onTouchEnd } =
-    useFlickInput(props.options, onInput)
+  const {
+    input,
+    operating,
+    onTouchStart,
+    onTouchMove,
+    onTouchEnd,
+    onMouseDown,
+    onMouseMove,
+    onMouseUp
+  } = useFlickInput(props.options, onInput)
 
   function onInput(value: string | null) {
     value && emit('input', value)
   }
 
-  function onClick() {
-    !isTouchDevice() && window.alert('Oops, this only works on mobile.')
-  }
+  useEventListener(window, 'mousemove', onMouseMove)
+  useEventListener(window, 'mouseup', onMouseUp)
 </script>
 
 <style lang="scss" scoped>
