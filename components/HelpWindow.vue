@@ -158,7 +158,7 @@
     <div class="navi">
       <button @click="$emit('close')">OK, I got it!</button>
     </div>
-    <div class="close" @click="$emit('close')">✕️</div>
+    <div class="close button" @click="$emit('close')">✕️</div>
   </div>
 </template>
 
