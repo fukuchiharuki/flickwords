@@ -48,7 +48,7 @@
         </div>
       </div>
     </div>
-    <div class="close" @click="$emit('close')">✕️</div>
+    <div class="close button" @click="$emit('close')">✕️</div>
   </div>
 </template>
 

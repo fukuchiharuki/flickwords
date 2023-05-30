@@ -8,18 +8,26 @@
       >. The words update daily.
     </p>
     <ul>
-      <li @click="$emit('switch', wordLength)">
-        <span class="icon">☕️</span>New Game
-        <span class="note">(One game a day)</span>
+      <li>
+        <a @click="$emit('switch', wordLength)">
+          <span class="icon">☕️</span>New Game
+          <span class="note">(One game a day)</span>
+        </a>
       </li>
-      <li v-if="wordLength !== 3" @click="$emit('switch', 3)">
-        <span class="icon">☘️</span>3 Letter Words
+      <li v-if="wordLength !== 3">
+        <a @click="$emit('switch', 3)">
+          <span class="icon">☘️</span>3 Letter Words
+        </a>
       </li>
-      <li v-if="wordLength !== 4" @click="$emit('switch', 4)">
-        <span class="icon">🍀</span>4 Letter Words
+      <li v-if="wordLength !== 4">
+        <a @click="$emit('switch', 4)">
+          <span class="icon">🍀</span>4 Letter Words
+        </a>
       </li>
-      <li v-if="wordLength !== 5" @click="$emit('switch', 5)">
-        <span class="icon">🌸</span>5 Letter Words
+      <li v-if="wordLength !== 5">
+        <a @click="$emit('switch', 5)">
+          <span class="icon">🌸</span>5 Letter Words
+        </a>
       </li>
     </ul>
 
@@ -56,7 +64,7 @@
         >licence</a
       >.
     </p>
-    <div class="close" @click="$emit('close')">✕️</div>
+    <div class="close button" @click="$emit('close')">✕️</div>
   </div>
 </template>
 
