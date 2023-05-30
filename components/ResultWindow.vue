@@ -42,10 +42,10 @@
         <button @click="tweet">Tweet the results</button>
       </div>
       <div class="copy">
-        <a @click="copy">or copy them to the clipboard</a>
         <div class="success" :class="{ visible: successfullyCopied }">
           successfully copied
         </div>
+        <a @click="copy">or copy them to the clipboard</a>
       </div>
     </div>
     <div class="close button" @click="$emit('close')">✕️</div>
@@ -124,7 +124,7 @@
     }
 
     .copy {
-      margin-top: 16px;
+      margin-top: 8px;
       font-size: small;
 
       .success {
